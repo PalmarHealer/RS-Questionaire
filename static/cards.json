@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "Ernährung": [
+      {
+        "id": 1,
+        "name": "Nahrung",
+        "description": "Nährstoffe liefern Energie und halten uns am Leben.",
+        "icon": "fa-duotone fa-utensils"
+      },
+      {
+        "id": 2,
+        "name": "Wasser",
+        "description": "Ohne Wasser kann der Mensch nur wenige Tage überleben.",
+        "icon": "fa-duotone fa-tint"
+      },
+      {
+        "id": 3,
+        "name": "Wasser",
+        "description": "Ohne Wasser kann der Mensch nur wenige Tage überleben.",
+        "icon": "fa-duotone fa-tint"
+      }
+    ],
+    "Gesundheit": [
+      {
+        "id": 4,
+        "name": "Medizin",
+        "description": "Medikamente und Behandlungen helfen uns, gesund zu bleiben.",
+        "icon": "fa-duotone fa-briefcase-medical"
+      },
+      {
+        "id": 5,
+        "name": "Bewegung",
+        "description": "Regelmäßige Bewegung stärkt den Körper und den Geist.",
+        "icon": "fa-duotone fa-running"
+      }
+    ]
+  }
+}
