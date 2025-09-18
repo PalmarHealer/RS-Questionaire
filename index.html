@@ -13,6 +13,7 @@
 <header id="topBar">
     <div class="brand-left" aria-label="Logo">
         <img src="static/logo.svg" alt="Logo">
+        <button id="aboutTrigger" class="about-badge" type="button" title="Über diese Seite">über</button>
     </div>
     <div id="progress" style="display: none;">
         <div id="progress-container">
@@ -67,6 +68,90 @@
         <button id="btnRestart" class="btn-primary" style="display: none;">Neustarten</button>
     </div>
 </footer>
+
+<!-- About modal -->
+<div id="aboutModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="aboutTitle">
+  <div class="modal-backdrop" tabindex="-1" aria-hidden="true"></div>
+  <div class="modal-content" role="document" tabindex="-1">
+    <button class="modal-close" type="button" aria-label="Schließen">&times;</button>
+
+    <h2 id="aboutTitle">Über diese Seite</h2>
+
+    <section class="about-people" aria-label="Team">
+      <div class="person">
+        <div class="person-photo" aria-hidden="true"></div>
+        <div class="person-info">
+          <h3>Idee</h3>
+          <p>Max muster idee</p>
+        </div>
+      </div>
+      <div class="person">
+        <div class="person-photo" aria-hidden="true"></div>
+        <div class="person-info">
+          <h3>Umsetzung</h3>
+          <p>Max muster coder</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-credits" aria-label="Credits">
+      <div class="credit">
+        <div class="credit-logo" aria-hidden="true"><i class="fa-brands fa-font-awesome"></i></div>
+        <div class="credit-text">Font Awesome als Icons benutzt</div>
+      </div>
+      <div class="credit">
+        <div class="credit-logo" aria-hidden="true">
+          <!-- Tabler logo placeholder -->
+          <svg class="tabler-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="22" height="22" aria-hidden="true">
+            <rect x="8" y="8" width="32" height="32" rx="8" ry="8" fill="currentColor"/>
+            <path d="M17 17h14v4h-5v14h-4V21h-5z" fill="#ffffff"/>
+          </svg>
+        </div>
+        <div class="credit-text">Tabler Icons für Dark/Light Switch</div>
+      </div>
+      <div class="credit">
+        <div class="credit-logo" aria-hidden="true">
+          <img src="static/inter.png" alt="Inter Logo" width="22" height="22" />
+        </div>
+        <div class="credit-text">Inter als Schriftart</div>
+      </div>
+    </section>
+
+    <section class="about-policies" aria-label="Hinweise &amp; Lizenz">
+      <p>Diese Webseite benutzt keine Cookies.</p>
+      <h3>Lizenz</h3>
+      <p>Der Code/diese Webseite steht unter GNU General Public License v3.0</p>
+      <div class="license-columns">
+        <div class="license-col">
+          <h4>Permissions</h4>
+          <ul>
+            <li>Commercial use</li>
+            <li>Modification</li>
+            <li>Distribution</li>
+            <li>Patent use</li>
+            <li>Private use</li>
+          </ul>
+        </div>
+        <div class="license-col">
+          <h4>Limitations</h4>
+          <ul>
+            <li>Liability</li>
+            <li>Warranty</li>
+          </ul>
+        </div>
+        <div class="license-col">
+          <h4>Conditions</h4>
+          <ul>
+            <li>License and copyright notice</li>
+            <li>State changes</li>
+            <li>Disclose source</li>
+            <li>Same license</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
 
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/script.js"></script>

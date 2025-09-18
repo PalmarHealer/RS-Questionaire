@@ -68,6 +68,26 @@ $(document).ready(function() {
         }
     }
 
+    // About modal interactions
+    const $aboutModal = $('#aboutModal');
+    const openAbout = function(){
+        $aboutModal.addClass('open').attr('aria-hidden','false');
+        const $content = $aboutModal.find('.modal-content');
+        $content.attr('tabindex','-1').focus();
+        $('body').addClass('theme-transition');
+        setTimeout(function(){ $('body').removeClass('theme-transition'); }, 200);
+    };
+    const closeAbout = function(){
+        $aboutModal.removeClass('open').attr('aria-hidden','true');
+    };
+    $('#aboutTrigger').on('click', openAbout);
+    $aboutModal.on('click', function(e){
+        if($(e.target).is('.modal-backdrop') || $(e.target).is('.modal-close')){
+            closeAbout();
+        }
+    });
+    $(document).on('keydown', function(e){ if(e.key === 'Escape' && $aboutModal.hasClass('open')) closeAbout(); });
+
 
     let targetX = 0, targetY = 0, cardData = {};
 
