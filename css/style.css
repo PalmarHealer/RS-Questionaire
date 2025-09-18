@@ -1,21 +1,21 @@
 :root {
-  /* Light theme (default) */
-  --bg-color: rgb(255, 229, 110);
-  --card-color: rgba(50, 40, 0, 0.5);
-  --text-color: rgb(255, 243, 198);
-  --progress-bar-color: rgb(122, 137, 172);
-  --progress-bar-background: rgb(255, 243, 198);
+  /* Light theme (default) — amber palette */
+  --bg-color: #fff3c6; /* lightest */
+  --card-color: #fde396; /* light card */
+  --text-color: #0e1111; /* dark text for readability */
+  --progress-bar-color: #f8bc01; /* primary accent */
+  --progress-bar-background: #fde396; /* track */
 
   /* Customizable styles */
   --radius: 10px;
   --radius-sm: 8px;
-  --vs-bg: rgba(0,0,0,0.15);
+  --vs-bg: #fbd357; /* VS badge bg in light mode */
   --shadow: 0 2px 10px rgba(0,0,0,0.12);
   --shadow-strong: 0 10px 24px rgba(0,0,0,0.2);
 
   /* Bars */
-  --bar-bg: rgba(0, 0, 0, 0.25);
-  --bar-border: rgba(255, 255, 255, 0.18);
+  --bar-bg: rgba(255, 243, 198, 0.78);
+  --bar-border: rgba(216, 140, 23, 0.22);
 }
 
 /* Dark theme auto (can be overridden by adding .dark on html or body) */
@@ -24,10 +24,10 @@
     --bg-color: #0f1115;
     --card-color: rgba(255,255,255,0.06);
     --text-color: #f0f3f8;
-    --progress-bar-color: #5aa0ff;
-    --progress-bar-background: rgba(255,255,255,0.16);
+    --progress-bar-color: #f8bc01; /* amber accent */
+    --progress-bar-background: rgba(248,188,1,0.20);
 
-    --vs-bg: rgba(255,255,255,0.10);
+    --vs-bg: rgba(248,188,1,0.16);
     --shadow: 0 2px 10px rgba(0,0,0,0.6);
     --shadow-strong: 0 10px 24px rgba(0,0,0,0.65);
 
@@ -45,14 +45,32 @@
   --bg-color: #0f1115;
   --card-color: rgba(255,255,255,0.06);
   --text-color: #f0f3f8;
-  --progress-bar-color: #5aa0ff;
-  --progress-bar-background: rgba(255,255,255,0.16);
-  --vs-bg: rgba(255,255,255,0.10);
+  --progress-bar-color: #f8bc01;
+  --progress-bar-background: rgba(248,188,1,0.20);
+  --vs-bg: rgba(248,188,1,0.16);
   --shadow: 0 2px 10px rgba(0,0,0,0.6);
   --shadow-strong: 0 10px 24px rgba(0,0,0,0.65);
   /* Bars */
   --bar-bg: rgba(0, 0, 0, 0.35);
   --bar-border: rgba(255, 255, 255, 0.12);
+}
+
+/* Optional manual light mode toggle via .light class */
+.light {
+  color-scheme: light;
+}
+.light {
+  --bg-color: #fff3c6;
+  --card-color: #fde396;
+  --text-color: #0e1111;
+  --progress-bar-color: #f8bc01;
+  --progress-bar-background: #fde396;
+  --vs-bg: #fbd357;
+  --shadow: 0 2px 10px rgba(0,0,0,0.12);
+  --shadow-strong: 0 10px 24px rgba(0,0,0,0.2);
+  /* Bars */
+  --bar-bg: rgba(255, 243, 198, 0.78);
+  --bar-border: rgba(216, 140, 23, 0.22);
 }
 
 
@@ -63,7 +81,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 10px 0 10px 135px;
+    margin: 10px 60px 10px 135px;
 }
 
 #progress #progress-container {
@@ -79,7 +97,7 @@
     margin-right: auto;
     width: 0;
     height: 16px;
-    background: linear-gradient(90deg, var(--progress-bar-color), rgba(255,255,255,0.35));
+    background: var(--progress-bar-color);
     border-radius: var(--radius-sm);
     transition: width 0.5s ease-in-out;
 }
@@ -111,7 +129,21 @@
 #nextStep.show {
     opacity: 1;
     pointer-events: auto;
-    background-color: var(--bg-color);
+    background-color: var(--progress-bar-color);
+    color: #ffffff;
+    box-shadow: 0 8px 22px rgba(248, 188, 1, 0.35);
+}
+#nextStep.show:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(248, 188, 1, 0.45);
+}
+#nextStep.show:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 16px rgba(248, 188, 1, 0.35);
+}
+#nextStep.show:focus-visible {
+    outline: 2px solid var(--progress-bar-background);
+    outline-offset: 2px;
 }
 .match {
     display: flex;
@@ -179,7 +211,7 @@ body {
 }
 .selected {
     transition: background-color 250ms;
-    background-color: rgba(0, 123, 255, 0.5);
+    background-color: rgba(248, 188, 1, 0.35);
 }
 p, h1, h2, h3, h4, span {
     color: var(--text-color);
@@ -257,7 +289,7 @@ i {
     justify-content: center;
     font-weight: 700;
     letter-spacing: 1px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.2) inset, 0 2px 8px rgba(0,0,0,0.18);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18); /* solid bg in light mode, no inset */
 }
 
 /* Tournament cards larger */
@@ -360,20 +392,28 @@ i {
     box-shadow: var(--shadow);
 }
 
-/* Print: force light mode and compact results layout */
+/* Print: define dedicated palette via CSS variables (no JS) */
 @media print {
+  @page { margin: 10mm; }
+  /* Print-specific theme variables */
   :root {
-    --bg-color: #ffffff;
-    --card-color: #ffffff;
-    --text-color: #111827;
-    --progress-bar-color: #2563eb;
-    --progress-bar-background: #e5e7eb;
-    --vs-bg: #e5e7eb;
+    color-scheme: light;
     --shadow: none;
     --shadow-strong: none;
+    /* Palette tuned for print (high contrast, less ink) */
+    --bg-color: #ffffff;
+    --card-color: #fff3c6; /* light warm surface for cards */
+    --text-color: #0f1111;
+    --progress-bar-color: #f8bc01; /* accent used in fills */
+    --progress-bar-background: #f4e3a6; /* subtle track if shown */
+    --vs-bg: #fde9a9;
+    --bar-bg: transparent;
+    --bar-border: rgba(0, 0, 0, 0.08);
+    --category-header-bg: rgba(0, 0, 0, 0.03);
+    --category-header-hover-bg: rgba(0, 0, 0, 0.06);
+    --category-header-border: rgba(0, 0, 0, 0.12);
   }
-  @page { margin: 10mm; }
-  body { background: #ffffff !important; display: block; }
+  body { background: var(--bg-color) !important; display: block; }
   /* Show header with logo; hide other UI for print */
   #bottomBar, #progress, #nextStep, #start-screen, #info-compare, #info-finale, .vs, .btn-primary { display: none !important; }
   #topBar { position: absolute; top: 0; left: 0; border: none !important; backdrop-filter: none !important; box-shadow: none !important; background: transparent !important; }
@@ -383,16 +423,17 @@ i {
   #step-1 { min-height: auto; align-items: flex-start; justify-content: flex-start; }
   /* Grid layout to fit more cards per page */
   #matchContainer { display: grid !important; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 6px; align-items: start; }
-  #matchContainer > h2 { grid-column: 1 / -1; color: #111827 !important; margin: 0 0 6px 0; font-size: 24px; font-weight: 700; }
+  #matchContainer > h2 { grid-column: 1 / -1; color: var(--text-color) !important; margin: 0 0 6px 0; font-size: 24px; font-weight: 700; }
   #matchContainer .card { min-height: 10px; }
   /* Compact cards */
-  .card { box-shadow: none !important; border: 2px solid #e5e7eb; background: #ffffff !important; width: auto !important; height: auto !important; break-inside: avoid; page-break-inside: avoid; }
+  .card { box-shadow: none !important; border: 2px solid var(--category-header-border); background: var(--bg-color) !important; width: auto !important; height: auto !important; break-inside: avoid; page-break-inside: avoid; }
   .card > .card-content { position: static; inset: auto; padding: 8px; }
-  .card .fill { background: #e0e7ff !important; }
+  /* Keep fill and text using theme colors */
+  .card .fill { background-color: var(--progress-bar-color) !important; }
   .card-info { gap: 8px; }
-  .card-info > i { font-size: 0.9em; height: 18px; line-height: 18px; }
+  .card-info > i { font-size: 0.9em; height: 18px; line-height: 18px; color: var(--text-color); }
   .card-info-title { margin: auto 0; }
-  .card-info-title > h3 { font-size: 12px; line-height: 1.2; font-weight: 500; }
+  .card-info-title > h3 { font-size: 12px; line-height: 1.2; font-weight: 500; color: var(--text-color); }
   .card-info-title > h4 { display: none !important; }
 }
 
@@ -454,10 +495,10 @@ i {
 
 :root {
   /* Category header theming */
-  --category-header-bg: rgba(0, 0, 0, 0.28);
-  --category-header-hover-bg: rgba(0, 0, 0, 0.36);
+  --category-header-bg: rgba(0, 0, 0, 0.05);
+  --category-header-hover-bg: rgba(0, 0, 0, 0.08);
   --category-header-text: var(--text-color);
-  --category-header-border: rgba(255, 255, 255, 0.18);
+  --category-header-border: rgba(0, 0, 0, 0.08);
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -470,6 +511,11 @@ i {
   --category-header-bg: rgba(255, 255, 255, 0.08);
   --category-header-hover-bg: rgba(255, 255, 255, 0.12);
   --category-header-border: rgba(255, 255, 255, 0.12);
+}
+.light {
+  --category-header-bg: rgba(0, 0, 0, 0.05);
+  --category-header-hover-bg: rgba(0, 0, 0, 0.08);
+  --category-header-border: rgba(0, 0, 0, 0.08);
 }
 
 /* Category groups for selection */
@@ -530,5 +576,57 @@ i {
   .category-body {
     padding-left: 0;
     padding-right: 0;
+  }
+}
+
+/* Theme toggle button */
+#topBar .actions-right { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 8px; }
+.theme-toggle { display: inline-flex; align-items: center; justify-content: center; height: 36px; width: 36px; background: var(--category-header-bg); color: var(--text-color); border: 1px solid var(--category-header-border); border-radius: 50%; cursor: pointer; box-shadow: var(--shadow); }
+.theme-toggle:hover { background: var(--category-header-hover-bg); }
+.theme-toggle svg { pointer-events: none; }
+
+/* Visually hidden (screen reader only) */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+@media print { .theme-toggle { display: none !important; } }
+
+
+/* Themed progress container for better contrast in light vs dark */
+.light #progress #progress-container {
+  background: var(--progress-bar-background);
+}
+.dark #progress #progress-container {
+  background: var(--progress-bar-background);
+}
+
+/* Light mode: emphasize selected cards using the primary (progress) color */
+.light #step-0 .selected,
+.light #step-1 .selected {
+  background-color: var(--progress-bar-color);
+}
+
+/* Semantic color aliases (non-breaking): use these going forward */
+:root {
+  --color-primary: var(--progress-bar-color);
+  --color-primary-track: var(--progress-bar-background);
+  --color-surface: var(--bg-color);
+  --color-surface-2: var(--card-color);
+  --color-text: var(--text-color);
+}
+
+
+/* Smooth theme transition helper: applied to body for ~500ms after theme toggle */
+@media (prefers-reduced-motion: no-preference) {
+  body.theme-transition,
+  body.theme-transition * {
+    transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease,
+                box-shadow 0.5s ease, fill 0.5s ease, stroke 0.5s ease,
+                outline-color 0.5s ease;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.theme-transition,
+  body.theme-transition * {
+    transition: none !important;
   }
 }

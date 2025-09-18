@@ -20,6 +20,15 @@
         </div>
         <p id="progress-text">0/0</p>
     </div>
+    <div class="actions-right">
+        <button id="btnTheme" class="theme-toggle" aria-pressed="false" title="Dark Mode umschalten" type="button">
+            <!-- Light mode target (shown when currently dark): moon-off -->
+            <svg data-icon="light" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-moon-off" aria-hidden="true" style="display:none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7.962 3.949a8.97 8.97 0 0 1 4.038 -.957v.008h.393a7.478 7.478 0 0 0 -2.07 3.308m-.141 3.84c.186 .823 .514 1.626 .989 2.373a7.49 7.49 0 0 0 4.586 3.268m3.893 -.11c.223 -.067 .444 -.144 .663 -.233a9.088 9.088 0 0 1 -.274 .597m-1.695 2.337a9 9 0 0 1 -12.71 -12.749" /><path d="M3 3l18 18" /></svg>
+            <!-- Dark mode target (shown when currently light): moon -->
+            <svg data-icon="dark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-moon" aria-hidden="true" style="display:none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
+            <span class="sr-only">Dark Mode</span>
+        </button>
+    </div>
 </header>
 <main class="wrapper">
     <!-- Intro before selection -->
@@ -52,6 +61,7 @@
 </main>
 <footer id="bottomBar">
     <div class="actions">
+        <span id="selectHint" class="hint-text" style="display: none;">Wähle mind. 3 aus – gut wären so 10</span>
         <button id="nextStep" class="btn-primary" disabled>Weiter</button>
         <button id="btnSavePDF" class="btn-primary" style="display: none;">PDF speichern</button>
         <button id="btnRestart" class="btn-primary" style="display: none;">Neustarten</button>

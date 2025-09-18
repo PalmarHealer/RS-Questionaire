@@ -1,6 +1,74 @@
 let selectedCards = [];
 $(document).ready(function() {
 
+    // Theme toggle setup
+    const root = document.documentElement;
+    const THEME_KEY = 'theme-preference';
+    function getStoredTheme(){ try { return localStorage.getItem(THEME_KEY); } catch(e){ return null; } }
+    function setStoredTheme(v){ try { localStorage.setItem(THEME_KEY, v); } catch(e){} }
+    function applyTheme(theme){
+        root.classList.remove('dark');
+        root.classList.remove('light');
+        if(theme === 'dark'){
+            root.classList.add('dark');
+        }
+        if(theme === 'light'){
+            root.classList.add('light');
+        }
+    }
+    function currentThemeIsDark(){
+        if(root.classList.contains('light')) return false;
+        if(root.classList.contains('dark')) return true;
+        const stored = getStoredTheme();
+        if(stored === 'dark') return true;
+        if(stored === 'light') return false;
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    function syncToggleUI(){
+        const $btn = $('#btnTheme');
+        if(!$btn.length) return;
+        const isDark = currentThemeIsDark();
+        $btn.attr('aria-pressed', isDark.toString());
+        const $svgs = $btn.find('svg');
+        $svgs.hide();
+        $btn.find('svg[data-icon="' + (isDark ? 'light' : 'dark') + '"]').show();
+        $btn.attr('title', isDark ? 'Hellen Modus aktivieren' : 'Dunklen Modus aktivieren');
+    }
+    const storedTheme = getStoredTheme();
+    if(storedTheme){ applyTheme(storedTheme); }
+    syncToggleUI();
+    let themeTransitionTimer;
+    let prePrintTheme = null;
+    $('#btnTheme').on('click', function(){
+        // Add temporary transition class to body for smooth theme change
+        if (themeTransitionTimer) {
+            clearTimeout(themeTransitionTimer);
+            themeTransitionTimer = null;
+        }
+        document.body.classList.add('theme-transition');
+
+        const isDark = currentThemeIsDark();
+        const next = isDark ? 'light' : 'dark';
+        applyTheme(next);
+        setStoredTheme(next);
+        syncToggleUI();
+
+        // Remove the transition class after 500ms
+        themeTransitionTimer = setTimeout(function () {
+            document.body.classList.remove('theme-transition');
+            themeTransitionTimer = null;
+        }, 500);
+    });
+    if(window.matchMedia){
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+        if(media.addEventListener){
+            media.addEventListener('change', function(){ if(!getStoredTheme()) syncToggleUI(); });
+        } else if(media.addListener) {
+            media.addListener(function(){ if(!getStoredTheme()) syncToggleUI(); });
+        }
+    }
+
+
     let targetX = 0, targetY = 0, cardData = {};
 
     // Hide footer on intro screen; will show when selection starts
