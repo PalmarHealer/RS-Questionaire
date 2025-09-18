@@ -3,27 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <title>Quiz</title>
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/icons.css">
 </head>
 <body>
-<div class="wrapper">
+<header id="topBar">
+    <div class="brand-left" aria-label="Logo">
+        <img src="static/logo.svg" alt="Logo">
+    </div>
     <div id="progress" style="display: none;">
         <div id="progress-container">
             <div id="progress-bar"></div>
         </div>
         <p id="progress-text">0/0</p>
     </div>
-    <div id="step-0">
-        <p id="nextStep">Weiter</p>
+</header>
+<main class="wrapper">
+    <!-- Intro before selection -->
+    <section id="start-screen" class="screen">
+        <h1>Willkommen!</h1>
+        <p class="screen-sub">Im ersten Schritt wählst du die Karten aus, die dir wichtig sind. Danach vergleichen wir sie miteinander, um deine Prioritäten zu ermitteln.</p>
+        <button id="btnStart" class="btn-primary">Auswahl starten</button>
+    </section>
+
+    <!-- Info before tournament comparisons -->
+    <section id="info-compare" class="screen" style="display: none;">
+        <h2>Jetzt geht's ins Duell</h2>
+        <p class="screen-sub">Wähle bei jedem Paar die Option, die dir wichtiger ist. So entsteht am Ende dein persönliches Ranking.</p>
+        <button id="btnStartTournament" class="btn-primary">Vergleiche starten</button>
+    </section>
+
+    <!-- Final info before showing results -->
+    <section id="info-finale" class="screen" style="display: none;">
+        <h2>Geschafft!</h2>
+        <p class="screen-sub">Wir sind durch – dein Ergebnis ist bereit.</p>
+        <button id="btnShowResults" class="btn-primary">Ergebnis anzeigen</button>
+    </section>
+
+    <div id="step-0" style="display: none;">
     </div>
 
     <div id="step-1" style="display: none;">
         <div id="matchContainer"></div>
     </div>
-</div>
+</main>
+<footer id="bottomBar">
+    <div class="actions">
+        <button id="nextStep" class="btn-primary" disabled>Weiter</button>
+        <button id="btnSavePDF" class="btn-primary" style="display: none;">PDF speichern</button>
+        <button id="btnRestart" class="btn-primary" style="display: none;">Neustarten</button>
+    </div>
+</footer>
 
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/script.js"></script>

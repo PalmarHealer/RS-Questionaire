@@ -1,23 +1,4 @@
 @import url("https://site-assets.fontawesome.com/releases/v6.1.0/css/all.css");
-.material-icons {
-  font-family: "Font Awesome 6 Duotone";
-  font-weight: 400;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  line-height: 1;
-  text-align: center;
-}
-
-.material-icons.replay:before,
-.material-icons.airplay:before,
-.material-icons.picture_in_picture_alt:before {
-  font-family: "Material Icons";
-}
-
 :root {
   --opacity: 0.4;
 }
