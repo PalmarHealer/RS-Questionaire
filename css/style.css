@@ -671,9 +671,9 @@ i {
   /* Keep fill and text using theme colors */
   .card .fill { background-color: var(--color-accent) !important; }
   .card-info { gap: 8px; }
-  .card-info > i { font-size: 0.9em; height: 18px; line-height: 18px; color: var(--color-text); }
+  .card-info > i { font-size: 24px; height: 1.2; line-height: 18px; color: var(--color-text); margin: auto 0; }
   .card-info-title { margin: auto 0; }
-  .card-info-title > h3 { font-size: 12px; line-height: 1.2; font-weight: 700; color: var(--color-text); }
+  .card-info-title > h3 { font-size: 24px; line-height: 1.2; font-weight: 700; color: var(--color-text); }
   .card-info-title > h4 { display: none !important; }
 
 }
