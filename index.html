@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
     <title>Quiz</title>
 
     <link rel="stylesheet" href="css/style.css">
@@ -11,24 +10,17 @@
 </head>
 <body>
 <header id="topBar">
-    <div class="brand-left" aria-label="Logo">
-        <img src="static/logo.svg" alt="Logo">
-        <button id="aboutTrigger" class="about-badge" type="button" title="Über diese Seite">über</button>
+    <div id="selectionProgress" style="display: none;">
+        <div id="selection-progress-container" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" aria-label="Ausgew&auml;hlte Karten">
+            <div id="selection-progress-bar"></div>
+            <span id="selection-progress-label" class="selection-progress-label">0 / 20 &#183; W&auml;hle mindestens 3 Karten aus.</span>
+        </div>
     </div>
     <div id="progress" style="display: none;">
         <div id="progress-container">
             <div id="progress-bar"></div>
         </div>
         <p id="progress-text">0/0</p>
-    </div>
-    <div class="actions-right">
-        <button id="btnTheme" class="theme-toggle" aria-pressed="false" title="Dark Mode umschalten" type="button">
-            <!-- Light mode target (shown when currently dark): moon-off -->
-            <svg data-icon="light" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-moon-off" aria-hidden="true" style="display:none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7.962 3.949a8.97 8.97 0 0 1 4.038 -.957v.008h.393a7.478 7.478 0 0 0 -2.07 3.308m-.141 3.84c.186 .823 .514 1.626 .989 2.373a7.49 7.49 0 0 0 4.586 3.268m3.893 -.11c.223 -.067 .444 -.144 .663 -.233a9.088 9.088 0 0 1 -.274 .597m-1.695 2.337a9 9 0 0 1 -12.71 -12.749" /><path d="M3 3l18 18" /></svg>
-            <!-- Dark mode target (shown when currently light): moon -->
-            <svg data-icon="dark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-moon" aria-hidden="true" style="display:none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
-            <span class="sr-only">Dark Mode</span>
-        </button>
     </div>
 </header>
 <main class="wrapper">
@@ -66,6 +58,7 @@
         <button id="nextStep" class="btn-primary" disabled>Weiter</button>
         <button id="btnSavePDF" class="btn-primary" style="display: none;">PDF speichern</button>
         <button id="btnRestart" class="btn-primary" style="display: none;">Neustarten</button>
+        <button id="aboutTrigger" class="btn-primary" type="button" title="&Uuml;ber diese Seite" style="display: none;">&Uuml;ber</button>
     </div>
 </footer>
 
@@ -75,31 +68,31 @@
   <div class="modal-content" role="document" tabindex="-1">
     <button class="modal-close" type="button" aria-label="Schließen">&times;</button>
 
-    <h2 id="aboutTitle">Über diese Seite</h2>
+    <h2 id="aboutTitle">Über dieses Quiz</h2>
 
     <section class="about-people" aria-label="Team">
       <div class="person">
         <div class="person-photo" aria-hidden="true"></div>
         <div class="person-info">
           <h3>Idee</h3>
-          <p>Max muster idee</p>
+          <p>Robert Schmikale</p>
         </div>
       </div>
       <div class="person">
         <div class="person-photo" aria-hidden="true"></div>
         <div class="person-info">
           <h3>Umsetzung</h3>
-          <p>Max muster coder</p>
+          <p>Palmar Healer</p>
         </div>
       </div>
     </section>
 
     <section class="about-credits" aria-label="Credits">
-      <div class="credit">
+      <a class="credit" href="https://fontawesome.com/icons" target="_blank" rel="noopener noreferrer" title="Font Awesome Icons">
         <div class="credit-logo" aria-hidden="true"><i class="fa-brands fa-font-awesome"></i></div>
-        <div class="credit-text">Font Awesome als Icons benutzt</div>
-      </div>
-      <div class="credit">
+        <div class="credit-text">Font Awesome für Icons</div>
+      </a>
+      <a class="credit" href="https://tabler.io/icons" target="_blank" rel="noopener noreferrer" title="Tabler Icons">
         <div class="credit-logo" aria-hidden="true">
           <!-- Tabler logo placeholder -->
           <svg class="tabler-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="22" height="22" aria-hidden="true">
@@ -107,45 +100,45 @@
             <path d="M17 17h14v4h-5v14h-4V21h-5z" fill="#ffffff"/>
           </svg>
         </div>
-        <div class="credit-text">Tabler Icons für Dark/Light Switch</div>
-      </div>
-      <div class="credit">
+        <div class="credit-text">Tabler für Dark/Light Mode Icons</div>
+      </a>
+      <a class="credit" href="https://rsms.me/inter/" target="_blank" rel="noopener noreferrer" title="Inter Schriftart">
         <div class="credit-logo" aria-hidden="true">
           <img src="static/inter.png" alt="Inter Logo" width="22" height="22" />
         </div>
         <div class="credit-text">Inter als Schriftart</div>
-      </div>
+      </a>
     </section>
 
     <section class="about-policies" aria-label="Hinweise &amp; Lizenz">
-      <p>Diese Webseite benutzt keine Cookies.</p>
+      <p>Dieses Quiz benutzt keine Cookies.</p>
       <h3>Lizenz</h3>
-      <p>Der Code/diese Webseite steht unter GNU General Public License v3.0</p>
+      <p>Der Code/dieses Quiz steht unter GNU General Public License v3.0</p>
       <div class="license-columns">
         <div class="license-col">
-          <h4>Permissions</h4>
-          <ul>
-            <li>Commercial use</li>
-            <li>Modification</li>
-            <li>Distribution</li>
-            <li>Patent use</li>
-            <li>Private use</li>
+          <h4>Berechtigungen</h4>
+          <ul class="list permissions-list">
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Kommerzielle Nutzung</span></li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Änderungen</span></li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Weiterverbreitung</span></li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Patentnutzung</span></li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Private Nutzung</span></li>
           </ul>
         </div>
         <div class="license-col">
-          <h4>Limitations</h4>
-          <ul>
-            <li>Liability</li>
-            <li>Warranty</li>
+          <h4>Einschränkungen</h4>
+          <ul class="list limitations-list">
+            <li><i class="fa-solid fa-xmark" aria-hidden="true"></i><span>Haftung</span></li>
+            <li><i class="fa-solid fa-xmark" aria-hidden="true"></i><span>Gewährleistung</span></li>
           </ul>
         </div>
         <div class="license-col">
-          <h4>Conditions</h4>
-          <ul>
-            <li>License and copyright notice</li>
-            <li>State changes</li>
-            <li>Disclose source</li>
-            <li>Same license</li>
+          <h4>Bedingungen</h4>
+          <ul class="list conditions-list">
+            <li><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Lizenz- und Urheberrechtshinweis</span></li>
+            <li><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Änderungen kenntlich machen</span></li>
+            <li><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Quellcode offenlegen</span></li>
+            <li><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Gleiche Lizenz</span></li>
           </ul>
         </div>
       </div>

@@ -1,81 +1,12 @@
 let selectedCards = [];
 $(document).ready(function() {
 
-    // Theme toggle setup
-    const root = document.documentElement;
-    const THEME_KEY = 'theme-preference';
-    function getStoredTheme(){ try { return localStorage.getItem(THEME_KEY); } catch(e){ return null; } }
-    function setStoredTheme(v){ try { localStorage.setItem(THEME_KEY, v); } catch(e){} }
-    function applyTheme(theme){
-        root.classList.remove('dark');
-        root.classList.remove('light');
-        if(theme === 'dark'){
-            root.classList.add('dark');
-        }
-        if(theme === 'light'){
-            root.classList.add('light');
-        }
-    }
-    function currentThemeIsDark(){
-        if(root.classList.contains('light')) return false;
-        if(root.classList.contains('dark')) return true;
-        const stored = getStoredTheme();
-        if(stored === 'dark') return true;
-        if(stored === 'light') return false;
-        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    function syncToggleUI(){
-        const $btn = $('#btnTheme');
-        if(!$btn.length) return;
-        const isDark = currentThemeIsDark();
-        $btn.attr('aria-pressed', isDark.toString());
-        const $svgs = $btn.find('svg');
-        $svgs.hide();
-        $btn.find('svg[data-icon="' + (isDark ? 'light' : 'dark') + '"]').show();
-        $btn.attr('title', isDark ? 'Hellen Modus aktivieren' : 'Dunklen Modus aktivieren');
-    }
-    const storedTheme = getStoredTheme();
-    if(storedTheme){ applyTheme(storedTheme); }
-    syncToggleUI();
-    let themeTransitionTimer;
-    let prePrintTheme = null;
-    $('#btnTheme').on('click', function(){
-        // Add temporary transition class to body for smooth theme change
-        if (themeTransitionTimer) {
-            clearTimeout(themeTransitionTimer);
-            themeTransitionTimer = null;
-        }
-        document.body.classList.add('theme-transition');
-
-        const isDark = currentThemeIsDark();
-        const next = isDark ? 'light' : 'dark';
-        applyTheme(next);
-        setStoredTheme(next);
-        syncToggleUI();
-
-        // Remove the transition class after 500ms
-        themeTransitionTimer = setTimeout(function () {
-            document.body.classList.remove('theme-transition');
-            themeTransitionTimer = null;
-        }, 500);
-    });
-    if(window.matchMedia){
-        const media = window.matchMedia('(prefers-color-scheme: dark)');
-        if(media.addEventListener){
-            media.addEventListener('change', function(){ if(!getStoredTheme()) syncToggleUI(); });
-        } else if(media.addListener) {
-            media.addListener(function(){ if(!getStoredTheme()) syncToggleUI(); });
-        }
-    }
-
     // About modal interactions
     const $aboutModal = $('#aboutModal');
     const openAbout = function(){
         $aboutModal.addClass('open').attr('aria-hidden','false');
         const $content = $aboutModal.find('.modal-content');
         $content.attr('tabindex','-1').focus();
-        $('body').addClass('theme-transition');
-        setTimeout(function(){ $('body').removeClass('theme-transition'); }, 200);
     };
     const closeAbout = function(){
         $aboutModal.removeClass('open').attr('aria-hidden','true');
@@ -88,24 +19,148 @@ $(document).ready(function() {
     });
     $(document).on('keydown', function(e){ if(e.key === 'Escape' && $aboutModal.hasClass('open')) closeAbout(); });
 
+    // Configurable milestone prompts shown during Vergleiche
+    const milestonePrompts = [
+        { percent: 66, text: 'Du hast bereits zwei Drittel der Vergleiche geschafft - weiter so!' },
+        { percent: 80, text: 'Nur noch wenige Vergleiche - gleich ist dein Ranking fertig!' }
+    ];
+    milestonePrompts.sort((a, b) => a.percent - b.percent);
+    const seenMilestones = new Set();
+    let activeMilestoneText = '';
+
+    const root = document.documentElement;
+    const computedStyles = getComputedStyle(root);
+    const selectionLimits = { min: 3, max: 20 };
+    const baseTextColor = (computedStyles.getPropertyValue('--color-text') || '#0f1111').trim() || '#0f1111';
+    const selectionPalette = {
+        danger: {
+            accent: (computedStyles.getPropertyValue('--selection-danger') || '#d94c3f').trim() || '#d94c3f',
+            contrast: baseTextColor
+        },
+        warning: {
+            accent: (computedStyles.getPropertyValue('--selection-warning') || '#d88c17').trim() || '#d88c17',
+            contrast: baseTextColor
+        },
+        success: {
+            accent: (computedStyles.getPropertyValue('--selection-success') || '#139a43').trim() || '#139a43',
+            contrast: baseTextColor
+        }
+    };
+    const selectionMessages = {
+        belowMin: 'Wähle mindestens 3 Karten aus.',
+        readyLow: 'Bereit? Starte den Vergleich.',
+        readyMid: 'Starker Mix! Du kannst direkt starten.',
+        readyHigh: 'Optional: Du kannst bis zu 20 Karten wählen.',
+        tooMany: 'Bitte höchstens 20 Karten auswählen.'
+    };
+
+    const $topBar = $('#topBar');
+    const $duelProgress = $('#progress');
+    const $selectionProgress = $('#selectionProgress');
+    const $selectionProgressContainer = $('#selection-progress-container');
+    const $selectionProgressBar = $('#selection-progress-bar');
+    const $selectionProgressLabel = $('#selection-progress-label');
+    const $selectHint = $('#selectHint');
+    const $nextStep = $('#nextStep');
+
+    function selectionStateForCount(count) {
+        if (count > selectionLimits.max) {
+            return { palette: selectionPalette.danger, isEnabled: false, message: selectionMessages.tooMany };
+        }
+        if (count >= 15) {
+            return { palette: selectionPalette.warning, isEnabled: true, message: selectionMessages.readyHigh };
+        }
+        if (count >= 8) {
+            return { palette: selectionPalette.success, isEnabled: true, message: selectionMessages.readyMid };
+        }
+        if (count >= selectionLimits.min) {
+            return { palette: selectionPalette.warning, isEnabled: true, message: selectionMessages.readyLow };
+        }
+        return { palette: selectionPalette.danger, isEnabled: false, message: selectionMessages.belowMin };
+    }
+
+    function updateSelectionIndicators() {
+        const count = selectedCards.length;
+        const state = selectionStateForCount(count);
+        const palette = state.palette || selectionPalette.warning;
+        const inSelectionPhase = $('#step-0').is(':visible');
+
+        root.style.setProperty('--selection-accent', palette.accent);
+
+        if ($selectionProgressBar.length && $selectionProgressContainer.length) {
+            const cappedCount = Math.max(0, Math.min(count, selectionLimits.max));
+            const ratio = selectionLimits.max ? (cappedCount / selectionLimits.max) : 0;
+            const widthPercent = Math.max(0, Math.min(ratio * 100, 100));
+            $selectionProgressBar.css({
+                width: `${Math.round(widthPercent * 10) / 10}%`,
+                background: palette.accent
+            });
+            $selectionProgressContainer.attr({
+                'aria-valuenow': cappedCount,
+                'aria-valuetext': `${count} von ${selectionLimits.max}`
+            });
+        }
+
+        if ($selectionProgressLabel.length) {
+            const parts = [`${count} / ${selectionLimits.max}`];
+            if (state.message) {
+                parts.push(state.message);
+            }
+            $selectionProgressLabel.text(parts.join(' \u00b7 '));
+        }
+
+        if ($selectionProgress.length) {
+            $selectionProgress.attr('data-selection-state', state.isEnabled ? 'ready' : 'blocked');
+            if (inSelectionPhase) {
+                $selectionProgress.css('display', 'flex').attr('aria-hidden', 'false');
+            } else {
+                $selectionProgress.css('display', 'none').attr('aria-hidden', 'true');
+            }
+        }
+
+        if (state.isEnabled) {
+            $nextStep.addClass('show').prop('disabled', false);
+        } else {
+            $nextStep.removeClass('show').prop('disabled', true);
+        }
+
+        if ($selectHint.length) {
+            $selectHint.hide();
+        }
+    }
+
+    window.updateSelectionIndicators = updateSelectionIndicators;
+    updateSelectionIndicators();
+
 
     let targetX = 0, targetY = 0, cardData = {};
 
     // Hide footer on intro screen; will show when selection starts
     $("#bottomBar").hide();
+    $("#aboutTrigger").hide();
 
     // Intro/start screen
     $("#btnStart").on("click", function() {
         $("#start-screen").hide();
         $("#step-0").show();
         $("#bottomBar").show();
+        $topBar.addClass('is-active selection-active');
+        $duelProgress.hide();
+        $selectionProgress.css('display', 'flex').attr('aria-hidden', 'false');
+        if ($selectHint.length) {
+            $selectHint.hide();
+        }
+        updateSelectionIndicators();
     });
 
     // Info before tournament
     $("#btnStartTournament").on("click", function() {
         $("#info-compare").hide();
         $("#step-1").show();
-        $("#progress").show();
+        $duelProgress.show();
+        $topBar.addClass('is-active').removeClass('selection-active');
+        $selectionProgress.css('display', 'none').attr('aria-hidden', 'true');
+        $("#aboutTrigger").hide();
         startTournament();
     });
 
@@ -175,12 +230,17 @@ $(document).ready(function() {
     let currentMatchIndex = 0;
     let scores = {};
 
-    $("#nextStep").on("click", function() {
+    $nextStep.on("click", function() {
         $('#step-0').hide();
         $('#bottomBar').hide();
         $('#info-compare').show();
-        $('#progress').hide();
-        $('#btnSavePDF, #btnRestart').hide();
+        $duelProgress.hide();
+        $topBar.removeClass('is-active selection-active');
+        $selectionProgress.css('display', 'none').attr('aria-hidden', 'true');
+        $('#btnSavePDF, #btnRestart, #aboutTrigger').hide();
+        if ($selectHint.length) {
+            $selectHint.hide();
+        }
     });
 
     $("#btnSavePDF").on("click", function() { window.print(); });
@@ -190,10 +250,41 @@ $(document).ready(function() {
         matches = generateMatchups(selectedCards);
         currentMatchIndex = 0;
         scores = {};
+        seenMilestones.clear();
+        activeMilestoneText = '';
 
-        selectedCards.forEach(id => scores[id] = 0);
+        selectedCards.forEach(function(id) { scores[id] = 0; });
         showNextMatch();
     }
+
+    function evaluateMilestones(percentage) {
+        if (!Number.isFinite(percentage)) {
+            return;
+        }
+        let updatedText = activeMilestoneText;
+        milestonePrompts.forEach(function(milestone) {
+            if (percentage >= milestone.percent && !seenMilestones.has(milestone.percent)) {
+                seenMilestones.add(milestone.percent);
+                updatedText = milestone.text;
+            }
+        });
+        if (updatedText !== activeMilestoneText) {
+            activeMilestoneText = updatedText;
+        }
+    }
+
+    function renderMilestoneMessage() {
+        const $message = $('#milestoneMessage');
+        if (!$message.length) {
+            return;
+        }
+        if (activeMilestoneText) {
+            $message.text(activeMilestoneText).addClass('is-visible');
+        } else {
+            $message.text('').removeClass('is-visible');
+        }
+    }
+
 
     function generateMatchups(cards) {
         let matchups = [];
@@ -206,18 +297,20 @@ $(document).ready(function() {
     }
 
     function showNextMatch() {
-        updateProgress();
+        const percentage = updateProgress();
+        evaluateMilestones(percentage);
         if (currentMatchIndex >= matches.length) {
             showFinalInfo();
             return;
         }
 
-        let [card1Id, card2Id] = matches[currentMatchIndex];
-        let card1 = cardData[card1Id];
-        let card2 = cardData[card2Id];
+        const [card1Id, card2Id] = matches[currentMatchIndex];
+        const card1 = cardData[card1Id];
+        const card2 = cardData[card2Id];
 
         $("#matchContainer").html(`
             <h2>Wähle, was dir wichtiger ist</h2>
+            <p id="milestoneMessage" class="milestone-message"></p>
             <div class="match">
                 <div class="card" onclick="selectWinner(${card1Id})">
                     <div class="card-content">
@@ -244,6 +337,8 @@ $(document).ready(function() {
                 </div>
             </div>
         `);
+
+        renderMilestoneMessage();
     }
 
     window.selectWinner = function(winnerId) {
@@ -253,30 +348,41 @@ $(document).ready(function() {
     }
 
     function updateProgress() {
-        let totalMatches = matches.length;
-        let completedMatches = currentMatchIndex;
-        let percentage = (completedMatches / totalMatches) * 100;
+        const totalMatches = matches.length;
+        const completedMatches = currentMatchIndex;
+        const percentage = totalMatches ? (completedMatches / totalMatches) * 100 : 0;
 
-        // Update text: "x / y"
         $("#progress-text").text(`${completedMatches} / ${totalMatches}`);
-
-        // Update progress bar
         $("#progress-bar").css("width", `${percentage}%`);
+
+        return percentage;
     }
 
     function showFinalInfo() {
-        $("#progress").hide();
+        $duelProgress.hide();
+        $topBar.removeClass('is-active selection-active');
+        $selectionProgress.css('display', 'none').attr('aria-hidden', 'true');
         $("#step-1").hide();
         $("#info-finale").show();
         $("#bottomBar").hide();
+        $("#aboutTrigger").hide();
+        if ($selectHint.length) {
+            $selectHint.hide();
+        }
     }
 
     function showRanking() {
-        $("#progress").hide();
+        $duelProgress.hide();
+        $topBar.removeClass('is-active selection-active');
+        $selectionProgress.css('display', 'none').attr('aria-hidden', 'true');
         $("#step-1").show();
         $("#bottomBar").show();
-        $("#nextStep").hide();
+        if ($selectHint.length) {
+            $selectHint.hide();
+        }
+        $nextStep.hide();
         $("#btnSavePDF, #btnRestart").show();
+        $("#aboutTrigger").show();
         let ranking = Object.entries(scores)
             .sort((a, b) => b[1] - a[1])
             .map(([id, score]) => {
@@ -298,7 +404,7 @@ $(document).ready(function() {
             })
             .join("");
 
-        $("#matchContainer").html(`<h2>Dein Ergebnis</h2>${ranking}`);
+        $("#matchContainer").html(`<h2>Dein Ergebnis</h2><p class="result-note">Speichere dein Ranking als PDF oder starte einen neuen Durchgang.</p>${ranking}`);
     }
 });
 
@@ -311,7 +417,9 @@ function onCardClick(thisCard) {
     } else {
         selectedCards = selectedCards.filter(item => item !== card.attr("id"));
     }
-    $("#nextStep").toggleClass("show", selectedCards.length >= 3).prop("disabled", selectedCards.length < 3);
+    if (typeof window.updateSelectionIndicators === 'function') {
+        window.updateSelectionIndicators();
+    }
 }
 function createInitialCards(card) {
     return $(`
