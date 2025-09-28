@@ -1,9 +1,10 @@
+@import url("../static/font/inter.css");
 :root {
   /* Light theme (default) — amber palette */
   --bg-color: #fff3c6; /* lightest */
   --card-color: #fde396; /* light card */
   --text-color: #0e1111; /* dark text for readability */
-  --progress-bar-color: #f8bc01; /* primary accent */
+  --progress-bar-color: #d88c17; /* primary accent */
   --progress-bar-background: #fde396; /* track */
 
   /* Customizable styles */
@@ -66,7 +67,7 @@
   --bg-color: #fff3c6;
   --card-color: #fde396;
   --text-color: #0e1111;
-  --progress-bar-color: #f8bc01;
+  --progress-bar-color: #d88c17;
   --progress-bar-background: #fde396;
   --vs-bg: #fbd357;
   --shadow: 0 2px 10px rgba(0,0,0,0.12);
@@ -158,6 +159,10 @@
     margin-top: 10px;
 }
 
+html, body, button, input, select, textarea {
+    font-family: "InterVariable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
 body {
     align-items: center;
     background-color: var(--bg-color);
@@ -219,7 +224,7 @@ body {
 }
 p, h1, h2, h3, h4, span {
     color: var(--text-color);
-    font-family: "Rubik", sans-serif;
+    font-family: "InterVariable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-weight: 400;
     margin: 0;
 }
@@ -710,3 +715,42 @@ i {
 .dark .about-credits .tabler-logo path { fill: #000000 !important; }
 /* Keep white "T" in explicit light mode to match current design */
 .light .about-credits .tabler-logo path { fill: #ffffff !important; }
+
+
+/* Person photos: default to example.jpg */
+.about-people .person-photo {
+  background-image: url("../static/example.jpg");
+  background-size: 101%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* Umsetzung person (second tile) uses example2.png */
+.about-people .person:nth-child(2) .person-photo {
+  background-image: url("../static/example2.png");
+}
+
+/* Make credit tiles clickable anchors look like cards */
+.about-credits a.credit {
+  text-decoration: none;
+  color: inherit;
+}
+.about-credits a.credit:hover { filter: brightness(0.98); }
+
+/* License list icons */
+.license-columns ul.list {
+  list-style: none;
+  padding-left: 0;
+}
+.license-columns ul.list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.license-columns ul.list li i {
+  width: 18px;
+  text-align: center;
+  font-size: 0.95em;
+}
+.permissions-list li i { color: #139a43; }
+.limitations-list li i { color: #d32f2f; }
+.conditions-list li i { color: #1976d2; }
