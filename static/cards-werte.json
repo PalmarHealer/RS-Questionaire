@@ -1,0 +1,207 @@
+﻿{
+  "id":  "values",
+  "label":  "Wertetest",
+  "preScreen":  {
+    "title":  "Wertetest",
+    "description":  "Finde heraus, welche Werte dich gerade am stärksten leiten."
+  },
+  "screens":  {
+    "start":  {
+      "title":  "Was ist dir wirklich wichtig?",
+      "subtitle":  "Wähle die Werte, die dir Herz und Richtung geben. Danach ordnen wir sie gemeinsam.",
+      "cta":  "Werte auswählen"
+    },
+    "compare":  {
+      "title":  "Werte im Vergleich",
+      "subtitle":  "Stelle jeweils zwei Werte gegenüber und entscheide, welcher heute Vorrang hat.",
+      "cta":  "Vergleiche starten"
+    },
+    "finale":  {
+      "title":  "Deine Prioritäten stehen fest",
+      "subtitle":  "Alle Vergleiche sind abgeschlossen – bereit für dein Ranking?",
+      "cta":  "Ergebnis anzeigen"
+    }
+  },
+  "selection":  {
+    "hint":  "",
+    "limits":  {
+      "min":  3,
+      "max":  20
+    },
+    "messages":  {
+      "belowMin":  "Wähle mindestens 3 Werte aus.",
+      "readyLow":  "Bereit? Starte den Vergleich.",
+      "readyMid":  "Tolle Auswahl – du kannst loslegen.",
+      "readyHigh":  "Du kannst noch bis zu 20 Werte aufnehmen.",
+      "tooMany":  "Bitte höchstens 20 Werte auswählen."
+    }
+  },
+  "flow":  {
+    "nextButton":  "Weiter",
+    "saveButton":  "PDF speichern",
+    "restartButton":  "Neu starten"
+  },
+  "tournament":  {
+    "title":  "Welcher Wert passt besser zu dir?",
+    "milestones":  [
+      {
+        "percent":  50,
+        "text":  "Die Hälfte ist geschafft – bleib dran!"
+      },
+      {
+        "percent":  90,
+        "text":  "Nur noch wenige Vergleiche bis zum Ergebnis!"
+      }
+    ]
+  },
+  "results":  {
+    "title":  "Deine Top-Werte",
+    "note":  "Exportiere dein Ranking oder starte noch einmal mit einer neuen Auswahl."
+  },
+  "cards":  [
+    {
+      "id":  201,
+      "name":  "Authentizität",
+      "description":  "Echt auftreten und nach eigenen Überzeugungen handeln.",
+      "icon":  "fa-solid fa-user-check"
+    },
+    {
+      "id":  202,
+      "name":  "Freiheit",
+      "description":  "Selbst entscheiden und den eigenen Weg gestalten.",
+      "icon":  "fa-solid fa-dove"
+    },
+    {
+      "id":  203,
+      "name":  "Verantwortung",
+      "description":  "Zu Entscheidungen stehen und für Folgen einstehen.",
+      "icon":  "fa-solid fa-scale-balanced"
+    },
+    {
+      "id":  204,
+      "name":  "Respekt",
+      "description":  "Wertschätzung gegenüber anderen leben und erfahren.",
+      "icon":  "fa-solid fa-handshake"
+    },
+    {
+      "id":  205,
+      "name":  "Vertrauen",
+      "description":  "Sich verlassen können und Zuversicht schenken.",
+      "icon":  "fa-solid fa-lock-open"
+    },
+    {
+      "id":  206,
+      "name":  "Gerechtigkeit",
+      "description":  "Fairness schaffen und gleiche Chancen ermöglichen.",
+      "icon":  "fa-solid fa-scale-unbalanced"
+    },
+    {
+      "id":  207,
+      "name":  "Kreativität",
+      "description":  "Neue Ideen entwickeln und Ausdruck finden.",
+      "icon":  "fa-solid fa-palette"
+    },
+    {
+      "id":  208,
+      "name":  "Entwicklung",
+      "description":  "Ständig wachsen, lernen und sich verbessern.",
+      "icon":  "fa-solid fa-seedling"
+    },
+    {
+      "id":  209,
+      "name":  "Liebe",
+      "description":  "Verbundenheit, Wärme und Fürsorge geben und erhalten.",
+      "icon":  "fa-solid fa-heart"
+    },
+    {
+      "id":  210,
+      "name":  "Verbundenheit",
+      "description":  "Gemeinschaft erleben und Teil von etwas sein.",
+      "icon":  "fa-solid fa-people-group"
+    },
+    {
+      "id":  211,
+      "name":  "Erfolg",
+      "description":  "Eigene Ziele erreichen und sichtbare Ergebnisse schaffen.",
+      "icon":  "fa-solid fa-trophy"
+    },
+    {
+      "id":  212,
+      "name":  "Abenteuerlust",
+      "description":  "Mutig Neues testen und Grenzen verschieben.",
+      "icon":  "fa-solid fa-compass"
+    },
+    {
+      "id":  213,
+      "name":  "Sicherheit",
+      "description":  "Stabilität, Ordnung und tatkräftige Vorsorge schaffen.",
+      "icon":  "fa-solid fa-shield-heart"
+    },
+    {
+      "id":  214,
+      "name":  "Gesundheit",
+      "description":  "Körperlich und mental im Gleichgewicht bleiben.",
+      "icon":  "fa-solid fa-heart-pulse"
+    },
+    {
+      "id":  215,
+      "name":  "Spiritualität",
+      "description":  "Sinn finden und sich mit etwas Größerem verbinden.",
+      "icon":  "fa-solid fa-star-and-crescent"
+    },
+    {
+      "id":  216,
+      "name":  "Nachhaltigkeit",
+      "description":  "Verantwortungsvoll handeln und Ressourcen schützen.",
+      "icon":  "fa-solid fa-leaf"
+    },
+    {
+      "id":  217,
+      "name":  "Dankbarkeit",
+      "description":  "Wertschätzung für Menschen und Momente zeigen.",
+      "icon":  "fa-solid fa-hands-praying"
+    },
+    {
+      "id":  218,
+      "name":  "Mut",
+      "description":  "Trotz Unsicherheit handeln und für Überzeugungen einstehen.",
+      "icon":  "fa-solid fa-person-running"
+    },
+    {
+      "id":  219,
+      "name":  "Weisheit",
+      "description":  "Erfahrungen reflektieren und kluge Entscheidungen treffen.",
+      "icon":  "fa-solid fa-book-open"
+    },
+    {
+      "id":  220,
+      "name":  "Humor",
+      "description":  "Leichtigkeit bewahren und gemeinsam lachen.",
+      "icon":  "fa-solid fa-face-grin-beam"
+    },
+    {
+      "id":  221,
+      "name":  "Anerkennung",
+      "description":  "Gesehen werden und Rückmeldung für Leistungen erhalten.",
+      "icon":  "fa-solid fa-thumbs-up"
+    },
+    {
+      "id":  222,
+      "name":  "Empathie",
+      "description":  "Gefühle anderer wahrnehmen und einbeziehen.",
+      "icon":  "fa-solid fa-people-arrows"
+    },
+    {
+      "id":  223,
+      "name":  "Selbstbestimmung",
+      "description":  "Eigene Prioritäten setzen und Grenzen ziehen.",
+      "icon":  "fa-solid fa-person-rays"
+    },
+    {
+      "id":  224,
+      "name":  "Gelassenheit",
+      "description":  "Ruhe bewahren und Vertrauen in den Verlauf haben.",
+      "icon":  "fa-solid fa-water"
+    }
+  ]
+}

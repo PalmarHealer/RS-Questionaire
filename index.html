@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -11,9 +11,9 @@
 <body>
 <header id="topBar">
     <div id="selectionProgress" style="display: none;">
-        <div id="selection-progress-container" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" aria-label="Ausgew&auml;hlte Karten">
+        <div id="selection-progress-container" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" aria-label="Ausgewählte Karten">
             <div id="selection-progress-bar"></div>
-            <span id="selection-progress-label" class="selection-progress-label">0 / 20 &#183; W&auml;hle mindestens 3 Karten aus.</span>
+            <span id="selection-progress-label" class="selection-progress-label"></span>
         </div>
     </div>
     <div id="progress" style="display: none;">
@@ -24,25 +24,54 @@
     </div>
 </header>
 <main class="wrapper">
+    <!-- Pre-screen before intro -->
+    <section id="pre-screen" class="screen pre-screen">
+        <div class="pre-screen-card">
+            <p class="pre-screen-heading"><span class="pre-screen-icon" aria-hidden="true">&#127775;</span>Willkommen!</p>
+            <p>Manchmal suchen wir Klarheit: Was treibt mich wirklich an? Und was brauche ich gerade am meisten?</p>
+            <ul class="pre-screen-list">
+                <li><strong>Werte</strong> sind dein innerer Kompass. Sie geben deinem Leben Richtung und zeigen dir, was sich für dich &bdquo;richtig&ldquo; anfühlt.</li>
+                <li><strong>Bedürfnisse</strong> sind das, was dich nährt und dir Balance gibt. Wenn sie erfüllt sind, fühlst du dich kraftvoll und im Einklang mit dir.</li>
+            </ul>
+            <p class="pre-screen-subheading"><span aria-hidden="true">&#128073;</span> Wähle jetzt, womit du starten möchtest:</p>
+            <ul class="pre-screen-actions">
+                <li><strong>Wertetest</strong> &ndash; finde heraus, welche Werte dir am wichtigsten sind.</li>
+                <li><strong>Bedürfnistest</strong> &ndash; entdecke, was du im Moment am meisten brauchst.</li>
+            </ul>
+                        <div id="pre-screen-tests" class="pre-screen-tests" role="list">
+                <button type="button" class="pre-screen-option" data-test-id="needs" aria-pressed="false" data-test-path="./static/cards-beduerfnisse.json">
+                    <span class="pre-screen-option-title">Bedürfnistest</span>
+                    <span class="pre-screen-option-desc">Entdecke, welche Bedürfnisse dir gerade Kraft geben.</span>
+                </button>
+                <button type="button" class="pre-screen-option" data-test-id="values" aria-pressed="false" data-test-path="./static/cards-werte.json">
+                    <span class="pre-screen-option-title">Wertetest</span>
+                    <span class="pre-screen-option-desc">Finde heraus, welche Werte dich gerade am stärksten leiten.</span>
+                </button>
+            </div>
+            <p>Beide Tests benötigen ein wenig Zeit (10&ndash;15&nbsp;Minuten), aber genau dadurch erhältst du ein wirklich aussagekräftiges Ergebnis, das dir zeigt, was dir persönlich besonders wichtig ist.</p>
+            <p class="pre-screen-note"><span aria-hidden="true">&#128274;</span> Hinweis zum Datenschutz: Während des gesamten Tests verlassen keine Daten deinen Rechner. Auch dein Ergebnis wird nirgendwo gespeichert &ndash; es gehört allein dir.</p>
+        </div>
+    </section>
+
     <!-- Intro before selection -->
-    <section id="start-screen" class="screen">
-        <h1>Willkommen!</h1>
-        <p class="screen-sub">Im ersten Schritt wählst du die Karten aus, die dir wichtig sind. Danach vergleichen wir sie miteinander, um deine Prioritäten zu ermitteln.</p>
-        <button id="btnStart" class="btn-primary">Auswahl starten</button>
+    <section id="start-screen" class="screen" style="display: none;">
+        <h1 id="start-screen-title"></h1>
+        <p id="start-screen-subtitle" class="screen-sub"></p>
+        <button id="btnStart" class="btn-primary" type="button"></button>
     </section>
 
     <!-- Info before tournament comparisons -->
     <section id="info-compare" class="screen" style="display: none;">
-        <h2>Jetzt geht's ins Duell</h2>
-        <p class="screen-sub">Wähle bei jedem Paar die Option, die dir wichtiger ist. So entsteht am Ende dein persönliches Ranking.</p>
-        <button id="btnStartTournament" class="btn-primary">Vergleiche starten</button>
+        <h2 id="compare-screen-title"></h2>
+        <p id="compare-screen-subtitle" class="screen-sub"></p>
+        <button id="btnStartTournament" class="btn-primary" type="button"></button>
     </section>
 
     <!-- Final info before showing results -->
     <section id="info-finale" class="screen" style="display: none;">
-        <h2>Geschafft!</h2>
-        <p class="screen-sub">Wir sind durch – dein Ergebnis ist bereit.</p>
-        <button id="btnShowResults" class="btn-primary">Ergebnis anzeigen</button>
+        <h2 id="final-screen-title"></h2>
+        <p id="final-screen-subtitle" class="screen-sub"></p>
+        <button id="btnShowResults" class="btn-primary" type="button"></button>
     </section>
 
     <div id="step-0" style="display: none;">
@@ -54,11 +83,11 @@
 </main>
 <footer id="bottomBar">
     <div class="actions">
-        <span id="selectHint" class="hint-text" style="display: none;">Wähle mind. 3 aus – gut wären so 10</span>
+        <span id="selectHint" class="hint-text" style="display: none;"></span>
         <button id="nextStep" class="btn-primary" disabled>Weiter</button>
         <button id="btnSavePDF" class="btn-primary" style="display: none;">PDF speichern</button>
         <button id="btnRestart" class="btn-primary" style="display: none;">Neustarten</button>
-        <button id="aboutTrigger" class="btn-primary" type="button" title="&Uuml;ber diese Seite" style="display: none;">&Uuml;ber</button>
+        <button id="aboutTrigger" class="btn-primary" type="button" title="Über diese Seite" style="display: none;">Über</button>
     </div>
 </footer>
 
