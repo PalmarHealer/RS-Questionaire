@@ -24,39 +24,14 @@
     </div>
 </header>
 <main class="wrapper">
-    <!-- Pre-screen before intro -->
-    <section id="pre-screen" class="screen pre-screen">
-        <div class="pre-screen-card">
-            <p class="pre-screen-heading"><span class="pre-screen-icon" aria-hidden="true">&#127775;</span>Willkommen!</p>
-            <p>Manchmal suchen wir Klarheit: Was treibt mich wirklich an? Und was brauche ich gerade am meisten?</p>
-            <ul class="pre-screen-list">
-                <li><strong>Werte</strong> sind dein innerer Kompass. Sie geben deinem Leben Richtung und zeigen dir, was sich für dich &bdquo;richtig&ldquo; anfühlt.</li>
-                <li><strong>Bedürfnisse</strong> sind das, was dich nährt und dir Balance gibt. Wenn sie erfüllt sind, fühlst du dich kraftvoll und im Einklang mit dir.</li>
-            </ul>
-            <p class="pre-screen-subheading"><span aria-hidden="true">&#128073;</span> Wähle jetzt, womit du starten möchtest:</p>
-            <ul class="pre-screen-actions">
-                <li><strong>Wertetest</strong> &ndash; finde heraus, welche Werte dir am wichtigsten sind.</li>
-                <li><strong>Bedürfnistest</strong> &ndash; entdecke, was du im Moment am meisten brauchst.</li>
-            </ul>
-                        <div id="pre-screen-tests" class="pre-screen-tests" role="list">
-                <button type="button" class="pre-screen-option" data-test-id="needs" aria-pressed="false" data-test-path="./static/cards-beduerfnisse.json">
-                    <span class="pre-screen-option-title">Bedürfnistest</span>
-                    <span class="pre-screen-option-desc">Entdecke, welche Bedürfnisse dir gerade Kraft geben.</span>
-                </button>
-                <button type="button" class="pre-screen-option" data-test-id="values" aria-pressed="false" data-test-path="./static/cards-werte.json">
-                    <span class="pre-screen-option-title">Wertetest</span>
-                    <span class="pre-screen-option-desc">Finde heraus, welche Werte dich gerade am stärksten leiten.</span>
-                </button>
-            </div>
-            <p>Beide Tests benötigen ein wenig Zeit (10&ndash;15&nbsp;Minuten), aber genau dadurch erhältst du ein wirklich aussagekräftiges Ergebnis, das dir zeigt, was dir persönlich besonders wichtig ist.</p>
-            <p class="pre-screen-note"><span aria-hidden="true">&#128274;</span> Hinweis zum Datenschutz: Während des gesamten Tests verlassen keine Daten deinen Rechner. Auch dein Ergebnis wird nirgendwo gespeichert &ndash; es gehört allein dir.</p>
-        </div>
-    </section>
-
     <!-- Intro before selection -->
     <section id="start-screen" class="screen" style="display: none;">
         <h1 id="start-screen-title"></h1>
         <p id="start-screen-subtitle" class="screen-sub"></p>
+        <div id="start-screen-info" class="start-screen-info" style="display: none;">
+            <p class="info-time">Dieser Test benötigt ein wenig Zeit (10–15 Minuten), aber genau dadurch erhältst du ein wirklich aussagekräftiges Ergebnis, das dir zeigt, was dir persönlich besonders wichtig ist.</p>
+            <p class="info-privacy"><span aria-hidden="true">&#128274;</span> Hinweis zum Datenschutz: Während des gesamten Tests verlassen keine Daten deinen Rechner. Auch dein Ergebnis wird nirgendwo gespeichert – es gehört allein dir.</p>
+        </div>
         <button id="btnStart" class="btn-primary" type="button"></button>
     </section>
 

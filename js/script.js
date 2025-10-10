@@ -53,8 +53,6 @@ $(function () {
     let currentMatchIndex = 0;
     let scores = {};
 
-    const $preScreen = $('#pre-screen');
-    const $preScreenTests = $('#pre-screen-tests');
     const $startScreen = $('#start-screen');
     const $startTitle = $('#start-screen-title');
     const $startSubtitle = $('#start-screen-subtitle');
@@ -82,21 +80,27 @@ $(function () {
     const $btnSavePDF = $('#btnSavePDF');
     const $btnRestart = $('#btnRestart');
     const $aboutTrigger = $('#aboutTrigger');
+    const $startScreenInfo = $('#start-screen-info');
 
     $bottomBar.hide();
     $aboutTrigger.hide();
 
-    $preScreenTests.on('click', '.pre-screen-option', function () {
-        const $btn = $(this);
-        if ($btn.prop('disabled')) {
-            return;
+    // Check for URL parameters on page load
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    // Auto-load quiz from URL parameter
+    const quizParam = getUrlParameter('quiz');
+    if (quizParam) {
+        const definition = definitionById(quizParam);
+        if (definition) {
+            loadTestDefinition(quizParam, null);
         }
-        const testId = $btn.data('test-id');
-        if (!testId) {
-            return;
-        }
-        loadTestDefinition(testId, $btn);
-    });
+    }
 
     $matchContainer.on('click', '.match .card', function () {
         const cardId = $(this).data('card-id');
@@ -155,6 +159,22 @@ $(function () {
         location.reload();
     });
 
+    // Modal functionality
+    const $aboutModal = $('#aboutModal');
+    $aboutTrigger.on('click', function () {
+        $aboutModal.css('display', 'flex').attr('aria-hidden', 'false');
+        $aboutModal.find('.modal-content').focus();
+    });
+
+    $aboutModal.on('click', '.modal-close, .modal-backdrop', function () {
+        $aboutModal.css('display', 'none').attr('aria-hidden', 'true');
+    });
+
+    // Prevent closing when clicking inside modal content
+    $aboutModal.on('click', '.modal-content', function (e) {
+        e.stopPropagation();
+    });
+
     function definitionById(testId) {
         return TEST_DEFINITIONS.find(function (definition) {
             return definition.id === testId;
@@ -162,80 +182,42 @@ $(function () {
     }
 
     function loadTestDefinition(testId, $trigger) {
-        clearPreScreenError();
         let definition = definitionById(testId);
-        const triggerPath = $trigger && $trigger.data('test-path');
-        if (!definition && triggerPath) {
-            definition = { id: testId, path: triggerPath };
-        } else if (definition && triggerPath) {
-            definition = $.extend({}, definition, { path: triggerPath });
-        }
+        const loadedFromUrl = true;
         if (!definition) {
-            showPreScreenError('Unbekannter Test.');
             return;
         }
         const cached = testConfigs[testId];
         if (cached) {
-            activateTest(testId, cached);
+            activateTest(testId, cached, loadedFromUrl);
             return;
         }
-        setPreScreenLoading($trigger, true);
         $.getJSON(definition.path).done(function (data) {
             if (typeof data !== 'object' || data === null) {
-                showPreScreenError('Die Daten für diesen Test konnten nicht geladen werden. Bitte versuche es erneut.');
                 return;
             }
             data.id = definition.id;
             data.path = definition.path;
             testConfigs[testId] = data;
-            activateTest(testId, data);
+            activateTest(testId, data, loadedFromUrl);
         }).fail(function () {
-            showPreScreenError('Die Daten für diesen Test konnten nicht geladen werden. Bitte versuche es erneut.');
-        }).always(function () {
-            setPreScreenLoading($trigger, false);
+            // Silent fail
         });
     }
 
-    function setPreScreenLoading($btn, isLoading) {
-        if (!$btn || !$btn.length) {
-            return;
-        }
-        if (isLoading) {
-            $btn.addClass('is-loading').prop('disabled', true);
-        } else {
-            $btn.removeClass('is-loading').prop('disabled', false);
-        }
-    }
-
-    function showPreScreenError(message) {
-        let $error = $preScreenTests.siblings('.pre-screen-error');
-        if (!$error.length) {
-            $error = $('<p/>', { class: 'pre-screen-error', role: 'alert' });
-            $preScreenTests.after($error);
-        }
-        $error.text(message);
-    }
-
-    function clearPreScreenError() {
-        $preScreenTests.siblings('.pre-screen-error').remove();
-    }
-
-    function activateTest(testId, config) {
+    function activateTest(testId, config, showInfo) {
         activeTestId = testId;
         activeTestConfig = config;
-        markPreScreenSelection(testId);
         applyTestConfig(config);
-        $preScreen.attr('aria-hidden', 'true').hide();
-        $startScreen.show();
-        $btnStart.focus();
-    }
 
-    function markPreScreenSelection(testId) {
-        $preScreenTests.find('.pre-screen-option').each(function () {
-            const $btn = $(this);
-            const isActive = $btn.data('test-id') === testId;
-            $btn.toggleClass('is-selected', isActive).attr('aria-pressed', isActive ? 'true' : 'false');
-        });
+        // Show info section if loaded from URL parameter
+        if (showInfo) {
+            $startScreenInfo.show();
+        } else {
+            $startScreenInfo.hide();
+        }
+
+        $startScreen.show();
     }
 
     function applyTestConfig(config) {
@@ -253,15 +235,15 @@ $(function () {
         const finaleScreen = screens.finale || {};
 
         $startTitle.text(startScreen.title || 'Willkommen!');
-        $startSubtitle.text(startScreen.subtitle || '');
+        $startSubtitle.html(startScreen.subtitle || '');
         $btnStart.text(startScreen.cta || 'Auswahl starten');
 
         $compareTitle.text(compareScreen.title || 'Jetzt geht\'s los');
-        $compareSubtitle.text(compareScreen.subtitle || '');
+        $compareSubtitle.html(compareScreen.subtitle || '');
         $btnStartTournament.text(compareScreen.cta || 'Vergleiche starten');
 
         $finalTitle.text(finaleScreen.title || 'Geschafft!');
-        $finalSubtitle.text(finaleScreen.subtitle || '');
+        $finalSubtitle.html(finaleScreen.subtitle || '');
         $btnShowResults.text(finaleScreen.cta || 'Ergebnis anzeigen');
 
         const flow = config.flow || {};
@@ -497,6 +479,16 @@ $(function () {
         $selectHint.hide();
     }
 
+    function getOrdinalSuffix(n) {
+        const germanOrdinals = [
+            'Erster', 'Zweiter', 'Dritter', 'Vierter', 'Fünfter',
+            'Sechster', 'Siebter', 'Achter', 'Neunter', 'Zehnter',
+            'Elfter', 'Zwölfter', 'Dreizehnter', 'Vierzehnter', 'Fünfzehnter',
+            'Sechzehnter', 'Siebzehnter', 'Achtzehnter', 'Neunzehnter', 'Zwanzigster'
+        ];
+        return germanOrdinals[n - 1] || (n + '.');
+    }
+
     function showRanking() {
         $duelProgress.hide();
         $topBar.removeClass('is-active selection-active');
@@ -515,23 +507,21 @@ $(function () {
 
         const ranking = Object.entries(scores)
             .sort(function (a, b) { return b[1] - a[1]; })
-            .map(function (entry) {
+            .map(function (entry, index) {
                 const id = entry[0];
                 const score = entry[1];
                 const card = cardData[id];
                 if (!card) {
                     return '';
                 }
-                const relativeScore = matches.length ? (score / matches.length) * 100 : 0;
-                const relativeScoreRounded = Math.round(relativeScore * 10) / 10;
+                const ordinalRank = getOrdinalSuffix(index + 1);
                 return [
-                    '<div class="card noClick">',
-                    '    <div class="fill" style="width: ' + relativeScore + '%"></div>',
+                    '<div class="card noClick result-card">',
                     '    <div class="card-content">',
                     '        <div class="card-info">',
                     '            <i class="' + (card.icon || '') + '"></i>',
                     '            <div class="card-info-title">',
-                    '                <h3>' + card.name + ' ' + relativeScoreRounded + '%</h3>',
+                    '                <h3>' + ordinalRank + ': ' + card.name + '</h3>',
                     '                <h4>' + (card.description || '') + '</h4>',
                     '            </div>',
                     '        </div>',
@@ -541,7 +531,9 @@ $(function () {
             })
             .join('');
 
-        $matchContainer.html('<h2>' + resultTitle + '</h2><p class="result-note">' + resultNote + '</p>' + ranking);
+        const ctaButton = '<div class="result-cta"><a href="https://www.robertschmikale.de/booking-calendar/kostenfreies-kennenlern-gespr%C3%A4ch" class="btn-primary cta-link">Mehr über meine Begleitung erfahren</a></div>';
+
+        $matchContainer.html('<h2>' + resultTitle + '</h2><p class="result-note">' + resultNote + '</p>' + ranking + ctaButton);
     }
 
 });
