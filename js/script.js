@@ -479,16 +479,6 @@ $(function () {
         $selectHint.hide();
     }
 
-    function getOrdinalSuffix(n) {
-        const germanOrdinals = [
-            'Erster', 'Zweiter', 'Dritter', 'Vierter', 'Fünfter',
-            'Sechster', 'Siebter', 'Achter', 'Neunter', 'Zehnter',
-            'Elfter', 'Zwölfter', 'Dreizehnter', 'Vierzehnter', 'Fünfzehnter',
-            'Sechzehnter', 'Siebzehnter', 'Achtzehnter', 'Neunzehnter', 'Zwanzigster'
-        ];
-        return germanOrdinals[n - 1] || (n + '.');
-    }
-
     function showRanking() {
         $duelProgress.hide();
         $topBar.removeClass('is-active selection-active');
@@ -514,14 +504,13 @@ $(function () {
                 if (!card) {
                     return '';
                 }
-                const ordinalRank = getOrdinalSuffix(index + 1);
                 return [
                     '<div class="card noClick result-card">',
                     '    <div class="card-content">',
                     '        <div class="card-info">',
                     '            <i class="' + (card.icon || '') + '"></i>',
                     '            <div class="card-info-title">',
-                    '                <h3>' + ordinalRank + ': ' + card.name + '</h3>',
+                    '                <h3>' + card.name + '</h3>',
                     '                <h4>' + (card.description || '') + '</h4>',
                     '            </div>',
                     '        </div>',
