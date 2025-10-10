@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -11,9 +11,9 @@
 <body>
 <header id="topBar">
     <div id="selectionProgress" style="display: none;">
-        <div id="selection-progress-container" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" aria-label="Ausgew&auml;hlte Karten">
+        <div id="selection-progress-container" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" aria-label="Ausgewählte Karten">
             <div id="selection-progress-bar"></div>
-            <span id="selection-progress-label" class="selection-progress-label">0 / 20 &#183; W&auml;hle mindestens 3 Karten aus.</span>
+            <span id="selection-progress-label" class="selection-progress-label"></span>
         </div>
     </div>
     <div id="progress" style="display: none;">
@@ -25,24 +25,28 @@
 </header>
 <main class="wrapper">
     <!-- Intro before selection -->
-    <section id="start-screen" class="screen">
-        <h1>Willkommen!</h1>
-        <p class="screen-sub">Im ersten Schritt wählst du die Karten aus, die dir wichtig sind. Danach vergleichen wir sie miteinander, um deine Prioritäten zu ermitteln.</p>
-        <button id="btnStart" class="btn-primary">Auswahl starten</button>
+    <section id="start-screen" class="screen" style="display: none;">
+        <h1 id="start-screen-title"></h1>
+        <p id="start-screen-subtitle" class="screen-sub"></p>
+        <div id="start-screen-info" class="start-screen-info" style="display: none;">
+            <p class="info-time">Dieser Test benötigt ein wenig Zeit (10–15 Minuten), aber genau dadurch erhältst du ein wirklich aussagekräftiges Ergebnis, das dir zeigt, was dir persönlich besonders wichtig ist.</p>
+            <p class="info-privacy"><span aria-hidden="true">&#128274;</span> Hinweis zum Datenschutz: Während des gesamten Tests verlassen keine Daten deinen Rechner. Auch dein Ergebnis wird nirgendwo gespeichert – es gehört allein dir.</p>
+        </div>
+        <button id="btnStart" class="btn-primary" type="button"></button>
     </section>
 
     <!-- Info before tournament comparisons -->
     <section id="info-compare" class="screen" style="display: none;">
-        <h2>Jetzt geht's ins Duell</h2>
-        <p class="screen-sub">Wähle bei jedem Paar die Option, die dir wichtiger ist. So entsteht am Ende dein persönliches Ranking.</p>
-        <button id="btnStartTournament" class="btn-primary">Vergleiche starten</button>
+        <h2 id="compare-screen-title"></h2>
+        <p id="compare-screen-subtitle" class="screen-sub"></p>
+        <button id="btnStartTournament" class="btn-primary" type="button"></button>
     </section>
 
     <!-- Final info before showing results -->
     <section id="info-finale" class="screen" style="display: none;">
-        <h2>Geschafft!</h2>
-        <p class="screen-sub">Wir sind durch – dein Ergebnis ist bereit.</p>
-        <button id="btnShowResults" class="btn-primary">Ergebnis anzeigen</button>
+        <h2 id="final-screen-title"></h2>
+        <p id="final-screen-subtitle" class="screen-sub"></p>
+        <button id="btnShowResults" class="btn-primary" type="button"></button>
     </section>
 
     <div id="step-0" style="display: none;">
@@ -54,11 +58,11 @@
 </main>
 <footer id="bottomBar">
     <div class="actions">
-        <span id="selectHint" class="hint-text" style="display: none;">Wähle mind. 3 aus – gut wären so 10</span>
+        <span id="selectHint" class="hint-text" style="display: none;"></span>
         <button id="nextStep" class="btn-primary" disabled>Weiter</button>
         <button id="btnSavePDF" class="btn-primary" style="display: none;">PDF speichern</button>
         <button id="btnRestart" class="btn-primary" style="display: none;">Neustarten</button>
-        <button id="aboutTrigger" class="btn-primary" type="button" title="&Uuml;ber diese Seite" style="display: none;">&Uuml;ber</button>
+        <button id="aboutTrigger" class="btn-primary" type="button" title="Über diese Seite" style="display: none;">Über</button>
     </div>
 </footer>
 
