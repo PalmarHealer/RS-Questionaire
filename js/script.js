@@ -183,7 +183,7 @@ $(function () {
 
     function loadTestDefinition(testId, $trigger) {
         let definition = definitionById(testId);
-        const loadedFromUrl = true;
+        const loadedFromUrl = ($trigger == null);
         if (!definition) {
             return;
         }
