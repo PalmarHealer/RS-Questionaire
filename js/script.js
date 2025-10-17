@@ -49,6 +49,7 @@ $(function () {
     const seenMilestones = new Set();
     let activeMilestoneText = '';
     let cardData = {};
+    let categoryData = {};
     let matches = [];
     let currentMatchIndex = 0;
     let scores = {};
@@ -268,10 +269,18 @@ $(function () {
         activeMilestoneText = '';
 
         cardData = {};
+        categoryData = {};
         selectedCards = [];
         matches = [];
         currentMatchIndex = 0;
         scores = {};
+
+        // Load categories if present
+        if (Array.isArray(config.categories)) {
+            config.categories.forEach(function (category) {
+                categoryData[category.id] = category;
+            });
+        }
 
         renderSelectionCards(Array.isArray(config.cards) ? config.cards : []);
         updateSelectionIndicators();
@@ -281,7 +290,13 @@ $(function () {
 
     function renderSelectionCards(cards) {
         const wrapper = $('<div class="cards"></div>');
-        cards.forEach(function (card) {
+        // Sort cards alphabetically by name
+        const sortedCards = cards.slice().sort(function (a, b) {
+            const nameA = (a.name || '').toLowerCase();
+            const nameB = (b.name || '').toLowerCase();
+            return nameA.localeCompare(nameB, 'de');
+        });
+        sortedCards.forEach(function (card) {
             const id = String(card.id);
             const normalizedCard = $.extend({}, card, { id: id });
             cardData[id] = normalizedCard;
@@ -495,6 +510,7 @@ $(function () {
         const resultTitle = resultConfig.title || 'Dein Ergebnis';
         const resultNote = resultConfig.note || 'Speichere dein Ranking als PDF oder starte einen neuen Durchgang.';
         const resultBetweenText = resultConfig.betweenText || '';
+        const showCategories = resultConfig.showCategories || false;
 
         const sortedEntries = Object.entries(scores)
             .sort(function (a, b) { return b[1] - a[1]; });
@@ -502,7 +518,7 @@ $(function () {
         // Limit to max 10 cards
         const limitedEntries = sortedEntries.slice(0, 10);
 
-        // Group cards by 3, with last group having 4 if there's a remainder
+        // Group cards by 3, with last group having 4 only if total is exactly 10
         const groups = [];
         let currentGroup = [];
 
@@ -514,9 +530,9 @@ $(function () {
             const isLastItem = i === limitedEntries.length - 1;
             const shouldClose = currentGroup.length === 3 || (isLastItem && remaining === 0);
 
-            // Special case: if we have exactly 1 item remaining after this group of 3,
-            // add it to this group to make a group of 4
-            if (currentGroup.length === 3 && remaining === 1) {
+            // Special case: if we have exactly 10 cards total and 1 remaining after this group of 3,
+            // add it to this group to make a group of 4 (3+3+4 pattern)
+            if (limitedEntries.length === 10 && currentGroup.length === 3 && remaining === 1) {
                 currentGroup.push(limitedEntries[i + 1]);
                 i++; // Skip the next item since we just added it
                 groups.push(currentGroup);
@@ -542,6 +558,12 @@ $(function () {
                 const overallIndex = groups.slice(0, groupIndex).reduce(function (sum, g) { return sum + g.length; }, 0) + indexInGroup;
                 const rank = overallIndex + 1;
 
+                let categoryHTML = '';
+                if (showCategories && card.categoryId && categoryData[card.categoryId]) {
+                    const category = categoryData[card.categoryId];
+                    categoryHTML = '<div class="card-category"><span class="category-name">Basis-Bedürfnis: ' + category.name + '</span><span class="category-desc">Gefühl: ' + category.description + '</span></div>';
+                }
+
                 return [
                     '<div class="result-card-wrapper">',
                     '    <div class="rank-number">' + rank + '</div>',
@@ -552,6 +574,7 @@ $(function () {
                     '                <div class="card-info-title">',
                     '                    <h3>' + card.name + '</h3>',
                     '                    <h4>' + (card.description || '') + '</h4>',
+                    categoryHTML ? '                    ' + categoryHTML : '',
                     '                </div>',
                     '            </div>',
                     '        </div>',

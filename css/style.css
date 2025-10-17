@@ -261,6 +261,29 @@ i {
     font-size: 0.85em;
     margin-top: 8px;
 }
+
+.card-category {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(15, 17, 17, 0.15);
+}
+
+.card-category .category-name {
+    font-size: 0.75em;
+    font-weight: 600;
+    color: var(--color-text);
+    opacity: 0.85;
+}
+
+.card-category .category-desc {
+    font-size: 0.7em;
+    color: var(--color-text);
+    opacity: 0.65;
+    font-style: italic;
+}
 /* Center tournament and results area */
 #step-1 {
     min-height: calc(100vh - 180px);
