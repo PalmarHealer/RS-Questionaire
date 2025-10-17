@@ -494,6 +494,7 @@ $(function () {
         const resultConfig = (activeTestConfig && activeTestConfig.results) || {};
         const resultTitle = resultConfig.title || 'Dein Ergebnis';
         const resultNote = resultConfig.note || 'Speichere dein Ranking als PDF oder starte einen neuen Durchgang.';
+        const resultBetweenText = resultConfig.betweenText || '';
 
         const sortedEntries = Object.entries(scores)
             .sort(function (a, b) { return b[1] - a[1]; });
@@ -564,7 +565,9 @@ $(function () {
 
         const ctaButton = '<div class="result-cta"><a href="https://www.robertschmikale.de/booking-calendar/kostenfreies-kennenlern-gespr%C3%A4ch" class="btn-primary cta-link">Mehr über meine Begleitung erfahren</a></div>';
 
-        $matchContainer.html('<h2>' + resultTitle + '</h2><p class="result-note">' + resultNote + '</p>' + ranking + ctaButton);
+        const betweenTextHTML = resultBetweenText ? '<div class="result-between-text">' + resultBetweenText + '</div>' : '';
+
+        $matchContainer.html('<h2>' + resultTitle + '</h2><p class="result-note">' + resultNote + '</p>' + ranking + betweenTextHTML + ctaButton);
     }
 
 });
