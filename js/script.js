@@ -495,30 +495,72 @@ $(function () {
         const resultTitle = resultConfig.title || 'Dein Ergebnis';
         const resultNote = resultConfig.note || 'Speichere dein Ranking als PDF oder starte einen neuen Durchgang.';
 
-        const ranking = Object.entries(scores)
-            .sort(function (a, b) { return b[1] - a[1]; })
-            .map(function (entry, index) {
+        const sortedEntries = Object.entries(scores)
+            .sort(function (a, b) { return b[1] - a[1]; });
+
+        // Limit to max 10 cards
+        const limitedEntries = sortedEntries.slice(0, 10);
+
+        // Group cards by 3, with last group having 4 if there's a remainder
+        const groups = [];
+        let currentGroup = [];
+
+        for (let i = 0; i < limitedEntries.length; i++) {
+            currentGroup.push(limitedEntries[i]);
+
+            // Check if we should close this group
+            const remaining = limitedEntries.length - i - 1;
+            const isLastItem = i === limitedEntries.length - 1;
+            const shouldClose = currentGroup.length === 3 || (isLastItem && remaining === 0);
+
+            // Special case: if we have exactly 1 item remaining after this group of 3,
+            // add it to this group to make a group of 4
+            if (currentGroup.length === 3 && remaining === 1) {
+                currentGroup.push(limitedEntries[i + 1]);
+                i++; // Skip the next item since we just added it
+                groups.push(currentGroup);
+                currentGroup = [];
+            } else if (shouldClose) {
+                groups.push(currentGroup);
+                currentGroup = [];
+            }
+        }
+
+        // Generate colored group backgrounds
+        const groupColors = ['gold', 'silver', 'bronze'];
+
+        const ranking = groups.map(function (group, groupIndex) {
+            const colorClass = groupColors[groupIndex] || 'default';
+            const groupCards = group.map(function (entry, indexInGroup) {
                 const id = entry[0];
                 const score = entry[1];
                 const card = cardData[id];
                 if (!card) {
                     return '';
                 }
+                const overallIndex = groups.slice(0, groupIndex).reduce(function (sum, g) { return sum + g.length; }, 0) + indexInGroup;
+                const rank = overallIndex + 1;
+
                 return [
-                    '<div class="card noClick result-card">',
-                    '    <div class="card-content">',
-                    '        <div class="card-info">',
-                    '            <i class="' + (card.icon || '') + '"></i>',
-                    '            <div class="card-info-title">',
-                    '                <h3>' + card.name + '</h3>',
-                    '                <h4>' + (card.description || '') + '</h4>',
+                    '<div class="result-card-wrapper">',
+                    '    <div class="rank-number">' + rank + '</div>',
+                    '    <div class="card noClick result-card">',
+                    '        <div class="card-content">',
+                    '            <div class="card-info">',
+                    '                <i class="' + (card.icon || '') + '"></i>',
+                    '                <div class="card-info-title">',
+                    '                    <h3>' + card.name + '</h3>',
+                    '                    <h4>' + (card.description || '') + '</h4>',
+                    '                </div>',
                     '            </div>',
                     '        </div>',
                     '    </div>',
                     '</div>'
                 ].join('');
-            })
-            .join('');
+            }).join('');
+
+            return '<div class="result-group result-group-' + colorClass + '">' + groupCards + '</div>';
+        }).join('');
 
         const ctaButton = '<div class="result-cta"><a href="https://www.robertschmikale.de/booking-calendar/kostenfreies-kennenlern-gespr%C3%A4ch" class="btn-primary cta-link">Mehr über meine Begleitung erfahren</a></div>';
 
