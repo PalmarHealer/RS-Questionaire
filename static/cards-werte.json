@@ -56,8 +56,8 @@
   },
   "results": {
     "title": "Dein Ergebnis",
-    "note": " ",
-    "betweenText": "Herzlichen Glückwunsch zum Abschluss des Tests! Mache jetzt einen Screenshot, um dein Ergebnis zu speichern."
+    "note": "Herzlichen Glückwunsch zum Abschluss des Tests! Mache jetzt einen Screenshot, um dein Ergebnis zu speichern.",
+    "betweenText": ""
   },
   "cards": [
     {
