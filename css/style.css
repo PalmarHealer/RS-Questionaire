@@ -272,14 +272,14 @@ i {
 }
 
 .card-category .category-name {
-    font-size: 0.75em;
+    font-size: 0.9em;
     font-weight: 600;
     color: var(--color-text);
     opacity: 0.85;
 }
 
 .card-category .category-desc {
-    font-size: 0.7em;
+    font-size: 0.85em;
     color: var(--color-text);
     opacity: 0.65;
     font-style: italic;
@@ -997,22 +997,29 @@ i {
   #step-1 { min-height: auto; align-items: flex-start; justify-content: flex-start; }
   /* Grid layout to fit more cards per page */
   #matchContainer { display: block !important; }
-  #matchContainer > h2 { color: var(--color-text) !important; margin: 0 0 6px 0; font-size: 24px; font-weight: 700; }
+  #matchContainer > h2 { color: var(--color-text) !important; margin: 0 0 6px 0; font-size: 18px; font-weight: 700; }
   #matchContainer .card { min-height: 10px; }
   /* Result groups in print */
   .result-group { padding: 8px; margin-bottom: 8px; page-break-inside: avoid; break-inside: avoid; }
   .result-card-wrapper { gap: 8px; }
-  .rank-number { font-size: 18px; min-width: 30px; }
+  .rank-number { font-size: 14px; min-width: 25px; }
   /* Compact cards */
   .card { box-shadow: none !important; border: 2px solid var(--category-header-border); background: var(--color-background) !important; width: auto !important; height: auto !important; break-inside: avoid; page-break-inside: avoid; }
-  .card > .card-content { position: static; inset: auto; padding: 8px; }
+  .card > .card-content { position: static; inset: auto; padding: 6px; }
   /* Keep fill and text using theme colors */
   .card .fill { background-color: var(--color-accent) !important; }
-  .card-info { gap: 8px; }
-  .card-info > i { font-size: 24px; height: 18px; line-height: 18px; color: var(--color-text); margin: auto 0; }
+  .card-info { gap: 6px; }
+  .card-info > i { font-size: 16px; height: 16px; line-height: 16px; color: var(--color-text); margin: auto 0; }
   .card-info-title { margin: auto 0; }
-  .card-info-title > h3 { font-size: 24px; line-height: 1.2; font-weight: 700; color: var(--color-text); }
+  .card-info-title > h3 { font-size: 16px; line-height: 1.2; font-weight: 700; color: var(--color-text); }
   .card-info-title > h4 { display: none !important; }
+  /* Category info in print */
+  .card-category { margin-top: 4px; padding-top: 4px; gap: 1px; }
+  .card-category .category-name { font-size: 12px; }
+  .card-category .category-desc { font-size: 11px; }
+  /* Result note text */
+  .result-note { font-size: 12px; margin-bottom: 8px; }
+  .result-between-text { font-size: 12px; margin: 12px auto 16px; }
 
 }
 

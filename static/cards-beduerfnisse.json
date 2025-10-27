@@ -57,7 +57,7 @@
   "results": {
     "title": "Dein Ergebnis",
     "note": "Herzlichen Glückwunsch zum Abschluss des Tests! Mache jetzt einen Screenshot, um dein Ergebnis zu speichern.",
-    "betweenText": "",
+    "betweenText": "Deine Top 10 Bedürfnisse zeigen dir, worauf du gerade besonders achten darfst. Sie sind dein innerer Kompass – nutze sie bewusst, um gut für dich zu sorgen und in Balance zu bleiben.",
     "showCategories": true
   },
   "categories": [
@@ -86,281 +86,141 @@
     {
       "id": "1",
       "name": "Sicherheit",
-      "description": "Gefühl von Schutz und Stabilität",
+      "description": "Schutz und Stabilität erleben, um vertrauen zu können",
       "icon": "fa-solid fa-shield-alt",
       "categoryId": "secure"
     },
     {
       "id": "2",
       "name": "Schutz",
-      "description": "Vor Gefahren bewahrt sein",
+      "description": "Mich sicher und behütet fühlen",
       "icon": "fa-solid fa-shield-heart",
       "categoryId": "secure"
     },
     {
       "id": "3",
-      "name": "Geborgenheit",
-      "description": "Emotionaler und physischer Halt",
-      "icon": "fa-solid fa-house-heart",
+      "name": "Gesundheit",
+      "description": "Körperlich und seelisch im Gleichgewicht sein",
+      "icon": "fa-solid fa-heart-pulse",
       "categoryId": "secure"
     },
     {
       "id": "4",
       "name": "Ruhe",
-      "description": "Innere und äußere Entspannung",
+      "description": "Zurückziehen, entspannen, regenerieren können",
       "icon": "fa-solid fa-spa",
       "categoryId": "secure"
     },
     {
       "id": "5",
       "name": "Struktur",
-      "description": "Ordnung und Übersicht im Leben",
+      "description": "Klarheit und Orientierung im Alltag",
       "icon": "fa-solid fa-layer-group",
       "categoryId": "secure"
     },
     {
       "id": "6",
-      "name": "Verlässlichkeit",
-      "description": "Vertrauen in Beständigkeit",
-      "icon": "fa-solid fa-handshake",
-      "categoryId": "secure"
-    },
-    {
-      "id": "7",
-      "name": "Privatsphäre",
-      "description": "Rückzugsort für sich selbst",
-      "icon": "fa-solid fa-door-closed",
-      "categoryId": "secure"
-    },
-    {
-      "id": "8",
-      "name": "Gesundheit",
-      "description": "Körperliches und seelisches Wohlbefinden",
-      "icon": "fa-solid fa-heart-pulse",
-      "categoryId": "secure"
-    },
-    {
-      "id": "9",
-      "name": "Erholung",
-      "description": "Zeit zur Regeneration",
-      "icon": "fa-solid fa-bed",
-      "categoryId": "secure"
-    },
-    {
-      "id": "10",
-      "name": "Vertrautheit",
-      "description": "Bekannte Umgebung und Sicherheit",
-      "icon": "fa-solid fa-home",
-      "categoryId": "secure"
-    },
-    {
-      "id": "11",
-      "name": "Liebe",
-      "description": "Gefühl von tiefer Zuneigung",
-      "icon": "fa-solid fa-heart",
-      "categoryId": "connected"
-    },
-    {
-      "id": "12",
       "name": "Zugehörigkeit",
       "description": "Teil einer Gemeinschaft sein",
       "icon": "fa-solid fa-users",
       "categoryId": "connected"
     },
     {
-      "id": "13",
+      "id": "7",
+      "name": "Liebe",
+      "description": "Zuneigung geben und empfangen können",
+      "icon": "fa-solid fa-heart",
+      "categoryId": "connected"
+    },
+    {
+      "id": "8",
       "name": "Vertrauen",
-      "description": "Sich auf andere verlassen können",
+      "description": "Sich sicher in Beziehungen fühlen",
       "icon": "fa-solid fa-handshake-angle",
       "categoryId": "connected"
     },
     {
-      "id": "14",
-      "name": "Wertschätzung",
-      "description": "Anerkennung und Achtung erfahren",
-      "icon": "fa-solid fa-award",
-      "categoryId": "connected"
-    },
-    {
-      "id": "15",
-      "name": "Unterstützung",
-      "description": "Hilfreiche Begleitung erleben",
-      "icon": "fa-solid fa-hands-helping",
-      "categoryId": "connected"
-    },
-    {
-      "id": "16",
+      "id": "9",
       "name": "Gemeinschaft",
-      "description": "In sozialem Kontakt stehen",
+      "description": "Mit anderen in Kontakt und Kooperation sein",
       "icon": "fa-solid fa-people-group",
       "categoryId": "connected"
     },
     {
-      "id": "17",
-      "name": "Freundschaft",
-      "description": "Verlässliche, herzliche Beziehung",
-      "icon": "fa-solid fa-user-group",
+      "id": "10",
+      "name": "Wertschätzung",
+      "description": "Gesehen und anerkannt werden",
+      "icon": "fa-solid fa-award",
       "categoryId": "connected"
     },
     {
-      "id": "18",
-      "name": "Ehrlichkeit",
-      "description": "Authentischer Austausch mit anderen",
-      "icon": "fa-solid fa-comments",
-      "categoryId": "connected"
-    },
-    {
-      "id": "19",
-      "name": "Respekt",
-      "description": "Gleichwürdigkeit und Achtung erleben",
-      "icon": "fa-solid fa-handshake-simple",
-      "categoryId": "connected"
-    },
-    {
-      "id": "20",
-      "name": "Mitgefühl",
-      "description": "Verständnis und Empathie teilen",
-      "icon": "fa-solid fa-hands-holding-heart",
-      "categoryId": "connected"
-    },
-    {
-      "id": "21",
+      "id": "11",
       "name": "Freiheit",
-      "description": "Selbst entscheiden können",
+      "description": "Selbstbestimmt handeln und entscheiden können",
       "icon": "fa-solid fa-dove",
       "categoryId": "free"
     },
     {
-      "id": "22",
+      "id": "12",
       "name": "Selbstbestimmung",
-      "description": "Eigenen Weg gestalten dürfen",
+      "description": "Eigene Wege gehen dürfen",
       "icon": "fa-solid fa-user-check",
       "categoryId": "free"
     },
     {
-      "id": "23",
+      "id": "13",
       "name": "Authentizität",
-      "description": "Echt und wahrhaftig sein",
+      "description": "Echt und wahrhaftig leben",
       "icon": "fa-solid fa-mask",
       "categoryId": "free"
     },
     {
-      "id": "24",
+      "id": "14",
       "name": "Kreativität",
-      "description": "Neues erschaffen und ausdrücken",
+      "description": "Mich ausdrücken und Neues gestalten",
       "icon": "fa-solid fa-paint-brush",
       "categoryId": "free"
     },
     {
-      "id": "25",
-      "name": "Lebendigkeit",
-      "description": "Sich energiegeladen und wach fühlen",
-      "icon": "fa-solid fa-bolt",
-      "categoryId": "free"
-    },
-    {
-      "id": "26",
-      "name": "Spontaneität",
-      "description": "Dem Moment folgen dürfen",
-      "icon": "fa-solid fa-wand-magic-sparkles",
-      "categoryId": "free"
-    },
-    {
-      "id": "27",
-      "name": "Neugier",
-      "description": "Interesse und Forschergeist leben",
-      "icon": "fa-solid fa-magnifying-glass",
-      "categoryId": "free"
-    },
-    {
-      "id": "28",
+      "id": "15",
       "name": "Freude",
-      "description": "Lebenslust und Spaß erfahren",
+      "description": "Lust und Leichtigkeit erleben",
       "icon": "fa-solid fa-face-laugh-beam",
       "categoryId": "free"
     },
     {
-      "id": "29",
-      "name": "Leichtigkeit",
-      "description": "Ohne Druck und Mühe leben",
-      "icon": "fa-solid fa-feather-alt",
-      "categoryId": "free"
-    },
-    {
-      "id": "30",
-      "name": "Sinnlichkeit",
-      "description": "Mit allen Sinnen genießen",
-      "icon": "fa-solid fa-hand-sparkles",
-      "categoryId": "free"
-    },
-    {
-      "id": "31",
+      "id": "16",
       "name": "Sinn",
-      "description": "Bedeutung im Leben erfahren",
+      "description": "Etwas tun, das Bedeutung hat",
       "icon": "fa-solid fa-compass",
       "categoryId": "effective"
     },
     {
-      "id": "32",
+      "id": "17",
       "name": "Beitrag",
-      "description": "Etwas Wertvolles bewirken",
+      "description": "Etwas zum Leben anderer oder der Welt beitragen",
       "icon": "fa-solid fa-hand-holding-heart",
       "categoryId": "effective"
     },
     {
-      "id": "33",
+      "id": "18",
       "name": "Wachstum",
-      "description": "Sich entwickeln und lernen",
+      "description": "Mich entfalten und weiterentwickeln",
       "icon": "fa-solid fa-seedling",
       "categoryId": "effective"
     },
     {
-      "id": "34",
+      "id": "19",
       "name": "Kompetenz",
-      "description": "Sich fähig und wirksam fühlen",
+      "description": "Mich fähig und wirksam erleben",
       "icon": "fa-solid fa-user-graduate",
       "categoryId": "effective"
     },
     {
-      "id": "35",
-      "name": "Lernen",
-      "description": "Erkenntnis und Entwicklung suchen",
-      "icon": "fa-solid fa-book-open",
-      "categoryId": "effective"
-    },
-    {
-      "id": "36",
-      "name": "Einfluss",
-      "description": "Mitgestalten können",
-      "icon": "fa-solid fa-gavel",
-      "categoryId": "effective"
-    },
-    {
-      "id": "37",
-      "name": "Integrität",
-      "description": "Im Einklang mit Werten handeln",
-      "icon": "fa-solid fa-scale-balanced",
-      "categoryId": "effective"
-    },
-    {
-      "id": "38",
-      "name": "Frieden",
-      "description": "Innere Ruhe und Harmonie erleben",
-      "icon": "fa-solid fa-peace",
-      "categoryId": "effective"
-    },
-    {
-      "id": "39",
-      "name": "Dankbarkeit",
-      "description": "Wertschätzung für das Leben empfinden",
-      "icon": "fa-solid fa-hands-praying",
-      "categoryId": "effective"
-    },
-    {
-      "id": "40",
-      "name": "Spiritualität",
-      "description": "Verbindung mit dem Größeren spüren",
-      "icon": "fa-solid fa-om",
+      "id": "20",
+      "name": "Orientierung",
+      "description": "Klarheit über Werte und Richtung haben",
+      "icon": "fa-solid fa-map-marked-alt",
       "categoryId": "effective"
     }
   ]
