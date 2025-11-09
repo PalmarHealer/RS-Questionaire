@@ -547,7 +547,6 @@ $(function () {
         const groupColors = ['gold', 'silver', 'bronze'];
 
         const ranking = groups.map(function (group, groupIndex) {
-            const colorClass = groupColors[groupIndex] || 'default';
             const groupCards = group.map(function (entry, indexInGroup) {
                 const id = entry[0];
                 const score = entry[1];
@@ -558,6 +557,17 @@ $(function () {
                 const overallIndex = groups.slice(0, groupIndex).reduce(function (sum, g) { return sum + g.length; }, 0) + indexInGroup;
                 const rank = overallIndex + 1;
 
+                // Determine card class based on rank
+                // Top 1-3: highlighted with border (result-card-top3)
+                // Top 4-6: highlighted without border (result-card-top6)
+                // Rest: normal (no special class)
+                let cardClass = 'card noClick result-card';
+                if (rank <= 3) {
+                    cardClass += ' result-card-top3';
+                } else if (rank <= 6) {
+                    cardClass += ' result-card-top6';
+                }
+
                 let categoryHTML = '';
                 if (showCategories && card.categoryId && categoryData[card.categoryId]) {
                     const category = categoryData[card.categoryId];
@@ -567,7 +577,7 @@ $(function () {
                 return [
                     '<div class="result-card-wrapper">',
                     '    <div class="rank-number">' + rank + '</div>',
-                    '    <div class="card noClick result-card">',
+                    '    <div class="' + cardClass + '">',
                     '        <div class="card-content">',
                     '            <div class="card-info">',
                     '                <i class="' + (card.icon || '') + '"></i>',
@@ -583,7 +593,15 @@ $(function () {
                 ].join('');
             }).join('');
 
-            return '<div class="result-group result-group-' + colorClass + '">' + groupCards + '</div>';
+            // Determine group class based on group index
+            // First group (top 1-3): gets border around group
+            // Other groups: no special styling
+            let groupClass = 'result-group';
+            if (groupIndex === 0) {
+                groupClass += ' result-group-top3';
+            }
+
+            return '<div class="' + groupClass + '">' + groupCards + '</div>';
         }).join('');
 
         const ctaButton = '<div class="result-cta"><a href="https://www.robertschmikale.de/booking-calendar/kostenfreies-kennenlern-gespr%C3%A4ch" class="btn-primary cta-link">Mehr über meine Begleitung erfahren</a></div>';
