@@ -382,7 +382,7 @@
       "id": "54",
       "name": "Mitgefühl",
       "description": "Verständnis und Anteilnahme für andere empfinden",
-      "icon": "fa-solid fa-hands-holding-heart"
+      "icon": "fa-solid fa-hand-holding-heart"
     },
     {
       "id": "55",
@@ -520,7 +520,7 @@
       "id": "77",
       "name": "Toleranz",
       "description": "Akzeptanz von Unterschiedlichkeit und Vielfalt",
-      "icon": "fa-solid fa-hands-holding-heart"
+      "icon": "fa-solid fa-hand-holding-heart"
     },
     {
       "id": "78",
@@ -616,7 +616,7 @@
       "id": "93",
       "name": "Zuverlässigkeit",
       "description": "Verlässlich, pünktlich und vertrauenswürdig sein",
-      "icon": "fa-solid fa-shield-check"
+      "icon": "fa-solid fa-shield-halved"
     }
   ]
 }

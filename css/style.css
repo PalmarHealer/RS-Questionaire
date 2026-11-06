@@ -1,4 +1,4 @@
-﻿@import url("../static/font/inter.css");
+@import url("../static/font/inter.css");
 :root {
   /* Core palette */
   --color-background: #fff3c6;
@@ -891,6 +891,7 @@ i {
   border: 1px solid var(--category-header-border);
   padding: 16px;
 }
+.modal .modal-content:focus { outline: none; }
 .modal .modal-close { position: absolute; top: 8px; right: 10px; background: transparent; color: var(--color-text); border: none; font-size: 26px; line-height: 1; cursor: pointer; }
 .modal h2 { margin: 4px 0 12px; font-weight: 700; }
 
@@ -902,7 +903,7 @@ i {
 .about-people .person-info p { opacity: 0.95; }
 
 /* Credits */
-.about-credits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
+.about-credits { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 12px 0; }
 .about-credits .credit { display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--category-header-bg); border: 1px solid var(--category-header-border); border-radius: var(--radius); }
 .about-credits .credit-logo { width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; color: var(--color-text); }
 .about-credits .credit-logo img { max-width: 100%; max-height: 100%; display: block; }

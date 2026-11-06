@@ -1,6 +1,4 @@
-﻿let selectedCards = [];
-
-(function ($) {
+﻿(function ($) {
 'use strict';
 
 $(function () {
@@ -40,8 +38,6 @@ $(function () {
         tooMany: 'Bitte höchstens 20 Karten auswählen.'
     };
 
-    const testConfigs = {};
-    let activeTestId = null;
     let activeTestConfig = null;
     let selectionLimits = { min: 3, max: 20 };
     let selectionMessages = $.extend({}, defaultSelectionMessages);
@@ -50,9 +46,11 @@ $(function () {
     let activeMilestoneText = '';
     let cardData = {};
     let categoryData = {};
+    let selectedCards = [];
     let matches = [];
     let currentMatchIndex = 0;
     let scores = {};
+    let duelWinners = {};
 
     const $startScreen = $('#start-screen');
     const $startTitle = $('#start-screen-title');
@@ -99,14 +97,18 @@ $(function () {
     if (quizParam) {
         const definition = definitionById(quizParam);
         if (definition) {
-            loadTestDefinition(quizParam, null);
+            loadTestDefinition(quizParam);
         }
     }
 
+    $cardsStep.on('click', '.card', function () {
+        toggleCardSelection($(this));
+    });
+
     $matchContainer.on('click', '.match .card', function () {
-        const cardId = $(this).data('card-id');
+        const cardId = $(this).attr('data-card-id');
         if (cardId !== undefined) {
-            window.selectWinner(cardId);
+            selectWinner(cardId);
         }
     });
 
@@ -167,8 +169,16 @@ $(function () {
         $aboutModal.find('.modal-content').focus();
     });
 
-    $aboutModal.on('click', '.modal-close, .modal-backdrop', function () {
+    function closeAboutModal() {
         $aboutModal.css('display', 'none').attr('aria-hidden', 'true');
+    }
+
+    $aboutModal.on('click', '.modal-close, .modal-backdrop', closeAboutModal);
+
+    $(document).on('keydown', function (e) {
+        if (e.key === 'Escape' && $aboutModal.attr('aria-hidden') === 'false') {
+            closeAboutModal();
+        }
     });
 
     // Prevent closing when clicking inside modal content
@@ -182,43 +192,20 @@ $(function () {
         }) || null;
     }
 
-    function loadTestDefinition(testId, $trigger) {
-        let definition = definitionById(testId);
-        const loadedFromUrl = ($trigger == null);
+    function loadTestDefinition(testId) {
+        const definition = definitionById(testId);
         if (!definition) {
-            return;
-        }
-        const cached = testConfigs[testId];
-        if (cached) {
-            activateTest(testId, cached, loadedFromUrl);
             return;
         }
         $.getJSON(definition.path).done(function (data) {
             if (typeof data !== 'object' || data === null) {
                 return;
             }
-            data.id = definition.id;
-            data.path = definition.path;
-            testConfigs[testId] = data;
-            activateTest(testId, data, loadedFromUrl);
-        }).fail(function () {
-            // Silent fail
-        });
-    }
-
-    function activateTest(testId, config, showInfo) {
-        activeTestId = testId;
-        activeTestConfig = config;
-        applyTestConfig(config);
-
-        // Show info section if loaded from URL parameter
-        if (showInfo) {
+            activeTestConfig = data;
+            applyTestConfig(data);
             $startScreenInfo.show();
-        } else {
-            $startScreenInfo.hide();
-        }
-
-        $startScreen.show();
+            $startScreen.show();
+        });
     }
 
     function applyTestConfig(config) {
@@ -274,6 +261,7 @@ $(function () {
         matches = [];
         currentMatchIndex = 0;
         scores = {};
+        duelWinners = {};
 
         // Load categories if present
         if (Array.isArray(config.categories)) {
@@ -338,6 +326,7 @@ $(function () {
                 background: palette.accent
             });
             $selectionProgressContainer.attr({
+                'aria-valuemax': selectionLimits.max,
                 'aria-valuenow': cappedCount,
                 'aria-valuetext': count + ' von ' + selectionLimits.max
             });
@@ -369,12 +358,26 @@ $(function () {
         $selectHint.hide();
     }
 
-    window.updateSelectionIndicators = updateSelectionIndicators;
+    function toggleCardSelection($card) {
+        $card.toggleClass('selected');
+        const id = $card.attr('data-card-id');
+        if ($card.hasClass('selected')) {
+            if (!selectedCards.includes(id)) {
+                selectedCards.push(id);
+            }
+        } else {
+            selectedCards = selectedCards.filter(function (item) {
+                return item !== id;
+            });
+        }
+        updateSelectionIndicators();
+    }
 
     function startTournament() {
         matches = generateMatchups(selectedCards);
         currentMatchIndex = 0;
         scores = {};
+        duelWinners = {};
         seenMilestones.clear();
         activeMilestoneText = '';
 
@@ -462,15 +465,24 @@ $(function () {
         ].join('');
     }
 
-    window.selectWinner = function (winnerId) {
+    function selectWinner(winnerId) {
         const id = String(winnerId);
+        const pair = matches[currentMatchIndex];
+        if (!pair || pair.indexOf(id) === -1) {
+            return;
+        }
         if (typeof scores[id] !== 'number') {
             scores[id] = 0;
         }
         scores[id]++;
+        duelWinners[pairKey(pair[0], pair[1])] = id;
         currentMatchIndex++;
         showNextMatch();
-    };
+    }
+
+    function pairKey(a, b) {
+        return a < b ? a + '|' + b : b + '|' + a;
+    }
 
     function updateProgress() {
         const totalMatches = matches.length;
@@ -512,8 +524,15 @@ $(function () {
         const resultBetweenText = resultConfig.betweenText || '';
         const showCategories = resultConfig.showCategories || false;
 
+        // Equal scores: whoever won the direct duel ranks higher
         const sortedEntries = Object.entries(scores)
-            .sort(function (a, b) { return b[1] - a[1]; });
+            .sort(function (a, b) {
+                if (b[1] !== a[1]) {
+                    return b[1] - a[1];
+                }
+                const winner = duelWinners[pairKey(a[0], b[0])];
+                return winner === a[0] ? -1 : (winner === b[0] ? 1 : 0);
+            });
 
         // Limit to max 10 cards
         const limitedEntries = sortedEntries.slice(0, 10);
@@ -611,49 +630,38 @@ $(function () {
         $matchContainer.html('<h2>' + resultTitle + '</h2><p class="result-note">' + resultNote + '</p>' + ranking + betweenTextHTML + ctaButton);
     }
 
+    function createInitialCards(card) {
+        return $('<div class="card" data-card-id="' + card.id + '">'
+            + '<div class="card-content">'
+            + '    <div class="card-info">'
+            + '        <i class="' + (card.icon || '') + '"></i>'
+            + '        <div class="card-info-title">'
+            + '            <h3>' + (card.name || '') + '</h3>'
+            + '            <h4>' + (card.description || '') + '</h4>'
+            + '        </div>'
+            + '    </div>'
+            + '</div>'
+            + '</div>');
+    }
+
+    // Every pair once, in random order and with random sides, so no card
+    // plays a long streak and the left/right position does not bias the result
+    function generateMatchups(cards) {
+        const matchups = [];
+        for (let i = 0; i < cards.length; i++) {
+            for (let j = i + 1; j < cards.length; j++) {
+                matchups.push(Math.random() < 0.5 ? [cards[i], cards[j]] : [cards[j], cards[i]]);
+            }
+        }
+        for (let k = matchups.length - 1; k > 0; k--) {
+            const r = Math.floor(Math.random() * (k + 1));
+            const tmp = matchups[k];
+            matchups[k] = matchups[r];
+            matchups[r] = tmp;
+        }
+        return matchups;
+    }
+
 });
 
 })(jQuery);
-
-function onCardClick(thisCard) {
-    const $card = $(thisCard);
-    $card.toggleClass('selected');
-
-    const id = $card.attr('id');
-    if ($card.hasClass('selected')) {
-        if (!selectedCards.includes(id)) {
-            selectedCards.push(id);
-        }
-    } else {
-        selectedCards = selectedCards.filter(function (item) {
-            return item !== id;
-        });
-    }
-    if (typeof window.updateSelectionIndicators === 'function') {
-        window.updateSelectionIndicators();
-    }
-}
-
-function createInitialCards(card) {
-    return $('<div class="card" id="' + card.id + '" onclick="onCardClick(this)">'
-        + '<div class="card-content">'
-        + '    <div class="card-info">'
-        + '        <i class="' + (card.icon || '') + '"></i>'
-        + '        <div class="card-info-title">'
-        + '            <h3>' + (card.name || '') + '</h3>'
-        + '            <h4>' + (card.description || '') + '</h4>'
-        + '        </div>'
-        + '    </div>'
-        + '</div>'
-        + '</div>');
-}
-
-function generateMatchups(cards) {
-    const matchups = [];
-    for (let i = 0; i < cards.length; i++) {
-        for (let j = i + 1; j < cards.length; j++) {
-            matchups.push([cards[i], cards[j]]);
-        }
-    }
-    return matchups;
-}
