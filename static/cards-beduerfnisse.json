@@ -101,7 +101,7 @@
       "id": "3",
       "name": "Geborgenheit",
       "description": "Wärme, Halt und inneres Zuhause",
-      "icon": "fa-solid fa-house-heart",
+      "icon": "fa-solid fa-house-chimney",
       "categoryId": "secure"
     },
     {
@@ -213,7 +213,7 @@
       "id": "19",
       "name": "Annahme",
       "description": "So sein dürfen, wie ich bin",
-      "icon": "fa-solid fa-hands-holding-heart",
+      "icon": "fa-solid fa-hand-holding-heart",
       "categoryId": "connected"
     },
     {
@@ -311,7 +311,7 @@
       "id": "33",
       "name": "Freiheit",
       "description": "Selbst entscheiden und gestalten können",
-      "icon": "fa-solid fa-bird",
+      "icon": "fa-solid fa-dove",
       "categoryId": "free"
     },
     {
@@ -339,7 +339,7 @@
       "id": "37",
       "name": "Ausdruck",
       "description": "Mich zeigen und ausdrücken dürfen",
-      "icon": "fa-solid fa-megaphone",
+      "icon": "fa-solid fa-bullhorn",
       "categoryId": "free"
     },
     {

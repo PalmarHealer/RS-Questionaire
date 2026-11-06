@@ -9,11 +9,11 @@ RS-Questionaire/
 ├── index.html                        # Haupt-HTML (Modals, Screens, Footer)
 ├── js/script.js                      # Anwendungslogik (jQuery)
 ├── css/style.css                     # Styling mit CSS-Variablen
-├── css/icons.css                     # Icon-Import (Font Awesome)
 ├── static/
 │   ├── cards-werte.json              # Konfiguration Wertetest
 │   ├── cards-beduerfnisse.json       # Konfiguration Beduerfnistest
-│   ├── font/                         # Inter-Schriftart
+│   ├── font/                         # Inter-Schriftart (lokal)
+│   ├── fontawesome/                  # Font Awesome Free 6.7.2 (lokal)
 │   └── *.jpg, *.png                  # Bilder
 ```
 
@@ -65,33 +65,31 @@ Texte, die **nicht** aus der JSON-Konfiguration kommen, sondern direkt in [`inde
 | Was                                | Datei & Zeile                                        | Aktueller Text                                       |
 |------------------------------------|------------------------------------------------------|------------------------------------------------------|
 | Seitentitel (Browser-Tab)          | [`index.html:6`](./index.html#L6)                   | `Quiz`                                               |
-| Info-Text Zeitaufwand              | [`index.html:32`](./index.html#L32)                  | `"Dieser Test benoetigt ein wenig Zeit..."`           |
-| Datenschutz-Hinweis                | [`index.html:33`](./index.html#L33)                  | `"Waehrend des gesamten Tests verlassen..."`          |
-| Button "Weiter" (Fallback)        | [`index.html:62`](./index.html#L62)                  | `Weiter`                                             |
-| Button "PDF speichern" (Fallback) | [`index.html:63`](./index.html#L63)                  | `PDF speichern`                                      |
-| Button "Neustarten" (Fallback)    | [`index.html:64`](./index.html#L64)                  | `Neustarten`                                         |
-| Button "Ueber"                     | [`index.html:65`](./index.html#L65)                  | `Ueber`                                               |
+| Info-Text Zeitaufwand              | [`index.html:34`](./index.html#L34)                  | `"Dieser Test benoetigt ein wenig Zeit..."`           |
+| Datenschutz-Hinweis                | [`index.html:35`](./index.html#L35)                  | `"Waehrend des gesamten Tests verlassen..."`          |
+| Button "Weiter" (Fallback)        | [`index.html:64`](./index.html#L64)                  | `Weiter`                                             |
+| Button "PDF speichern" (Fallback) | [`index.html:65`](./index.html#L65)                  | `PDF speichern`                                      |
+| Button "Neustarten" (Fallback)    | [`index.html:66`](./index.html#L66)                  | `Neustarten`                                         |
+| Button "Ueber"                     | [`index.html:67`](./index.html#L67)                  | `Ueber`                                               |
 
 ### 3. Modal "Ueber dieses Quiz" (index.html)
 
 | Was                                | Datei & Zeile                                        | Aktueller Text / Link                                |
 |------------------------------------|------------------------------------------------------|------------------------------------------------------|
-| Modal-Ueberschrift                  | [`index.html:75`](./index.html#L75)                  | `"Ueber dieses Quiz"`                                 |
-| Team-Rolle 1                       | [`index.html:81`](./index.html#L81)                  | `"Idee"`                                             |
-| Team-Name 1                        | [`index.html:82`](./index.html#L82)                  | `"Robert Schmikale"`                                 |
-| Team-Rolle 2                       | [`index.html:88`](./index.html#L88)                  | `"Umsetzung"`                                        |
-| Team-Name 2                        | [`index.html:89`](./index.html#L89)                  | `"Palmar Healer"`                                    |
-| Credit-Link Font Awesome           | [`index.html:95`](./index.html#L95)                  | `https://fontawesome.com/icons`                      |
-| Credit-Text Font Awesome           | [`index.html:97`](./index.html#L97)                  | `"Font Awesome fuer Icons"`                           |
-| Credit-Link Tabler Icons           | [`index.html:99`](./index.html#L99)                  | `https://tabler.io/icons`                            |
-| Credit-Text Tabler                 | [`index.html:107`](./index.html#L107)                | `"Tabler fuer Dark/Light Mode Icons"`                 |
-| Credit-Link Inter Schrift          | [`index.html:109`](./index.html#L109)                | `https://rsms.me/inter/`                             |
-| Credit-Text Inter                  | [`index.html:113`](./index.html#L113)                | `"Inter als Schriftart"`                             |
-| Cookie-Hinweis                     | [`index.html:118`](./index.html#L118)                | `"Dieses Quiz benutzt keine Cookies."`               |
-| Lizenz-Text                        | [`index.html:120`](./index.html#L120)                | `"...GNU General Public License v3.0"`               |
-| Lizenz-Berechtigungen              | [`index.html:124-130`](./index.html#L124-L130)      | Kommerzielle Nutzung, Aenderungen, etc.              |
-| Lizenz-Einschraenkungen            | [`index.html:134-137`](./index.html#L134-L137)      | Haftung, Gewaehrleistung                              |
-| Lizenz-Bedingungen                 | [`index.html:141-146`](./index.html#L141-L146)      | Urheberrechtshinweis, Quellcode, etc.                |
+| Modal-Ueberschrift                  | [`index.html:77`](./index.html#L77)                  | `"Ueber dieses Quiz"`                                 |
+| Team-Rolle 1                       | [`index.html:83`](./index.html#L83)                  | `"Idee"`                                             |
+| Team-Name 1                        | [`index.html:84`](./index.html#L84)                  | `"Robert Schmikale"`                                 |
+| Team-Rolle 2                       | [`index.html:90`](./index.html#L90)                  | `"Umsetzung"`                                        |
+| Team-Name 2                        | [`index.html:91`](./index.html#L91)                  | `"Palmar Healer"`                                    |
+| Credit-Link Font Awesome           | [`index.html:97`](./index.html#L97)                  | `https://fontawesome.com/icons`                      |
+| Credit-Text Font Awesome           | [`index.html:99`](./index.html#L99)                  | `"Font Awesome fuer Icons"`                           |
+| Credit-Link Inter Schrift          | [`index.html:101`](./index.html#L101)                | `https://rsms.me/inter/`                             |
+| Credit-Text Inter                  | [`index.html:105`](./index.html#L105)                | `"Inter als Schriftart"`                             |
+| Cookie-Hinweis                     | [`index.html:110`](./index.html#L110)                | `"Dieses Quiz benutzt keine Cookies."`               |
+| Lizenz-Text                        | [`index.html:112`](./index.html#L112)                | `"...GNU General Public License v3.0"`               |
+| Lizenz-Berechtigungen              | [`index.html:117-121`](./index.html#L117-L121)      | Kommerzielle Nutzung, Aenderungen, etc.              |
+| Lizenz-Einschraenkungen            | [`index.html:127-128`](./index.html#L127-L128)      | Haftung, Gewaehrleistung                              |
+| Lizenz-Bedingungen                 | [`index.html:134-137`](./index.html#L134-L137)      | Urheberrechtshinweis, Quellcode, etc.                |
 
 ### 4. CTA-Link auf Ergebnisseite (js/script.js)
 
@@ -99,8 +97,8 @@ Der Call-to-Action-Button auf der Ergebnisseite ist in JavaScript hartcodiert:
 
 | Was                                | Datei & Zeile                                        | Aktueller Wert                                       |
 |------------------------------------|------------------------------------------------------|------------------------------------------------------|
-| CTA-Link (URL)                     | [`js/script.js:607`](./js/script.js#L607)           | `https://www.robertschmikale.de/`                   |
-| CTA-Link-Text                      | [`js/script.js:607`](./js/script.js#L607)           | `"Mehr ueber meine Begleitung erfahren"`              |
+| CTA-Link (URL)                     | [`js/script.js:626`](./js/script.js#L626)           | `https://www.robertschmikale.de/`                   |
+| CTA-Link-Text                      | [`js/script.js:626`](./js/script.js#L626)           | `"Mehr ueber meine Begleitung erfahren"`              |
 
 ### 5. Fallback-Texte in JavaScript (js/script.js)
 
@@ -108,15 +106,15 @@ Falls die JSON-Konfiguration bestimmte Felder nicht enthaelt, werden diese Fallb
 
 | Was                                | Datei & Zeile                                        |
 |------------------------------------|------------------------------------------------------|
-| Meilenstein-Meldungen (Standard)   | [`js/script.js:12-15`](./js/script.js#L12-L15)      |
-| Auswahl-Statusmeldungen (Standard) | [`js/script.js:35-40`](./js/script.js#L35-L40)      |
-| Screen-Titel Fallbacks             | [`js/script.js:238-253`](./js/script.js#L238-L253)  |
-| Turnier-Titel Fallback             | [`js/script.js:428`](./js/script.js#L428)            |
-| Ergebnis-Titel/Note Fallbacks      | [`js/script.js:510-511`](./js/script.js#L510-L511)  |
+| Meilenstein-Meldungen (Standard)   | [`js/script.js:10-13`](./js/script.js#L10-L13)      |
+| Auswahl-Statusmeldungen (Standard) | [`js/script.js:34-38`](./js/script.js#L34-L38)      |
+| Screen-Titel Fallbacks             | [`js/script.js:225-240`](./js/script.js#L225-L240)  |
+| Turnier-Titel Fallback             | [`js/script.js:431`](./js/script.js#L431)            |
+| Ergebnis-Titel/Note Fallbacks      | [`js/script.js:522-523`](./js/script.js#L522-L523)  |
 
 ### 6. Farben und Design (css/style.css)
 
-Alle Farben werden ueber CSS-Variablen in [`css/style.css:2-33`](./css/style.css#L2-L33) gesteuert:
+Alle Farben werden ueber CSS-Variablen in [`css/style.css:2-32`](./css/style.css#L2-L32) gesteuert:
 
 | Variable                           | Beschreibung                     | Standardwert                                         |
 |------------------------------------|----------------------------------|------------------------------------------------------|
@@ -126,24 +124,22 @@ Alle Farben werden ueber CSS-Variablen in [`css/style.css:2-33`](./css/style.css
 | `--color-accent`                   | Akzentfarbe (Buttons etc.)       | `#d88c17` (Gold/Orange)                              |
 | `--color-accent-track`             | Fortschrittsbalken-Hintergrund   | `#fde396`                                            |
 | `--color-versus-badge`             | VS-Badge im Turnier              | `#fbd357`                                            |
-| `--selection-color-danger`         | Auswahl: zu wenige Karten        | `#c0392b` (Rot)                                      |
-| `--selection-color-warning`        | Auswahl: Achtung                 | `#e67e22` (Orange)                                   |
-| `--selection-color-success`        | Auswahl: bereit                  | `#27ae60` (Gruen)                                    |
+| `--selection-danger`               | Auswahl: zu wenige Karten        | `#d94c3f` (Rot)                                      |
+| `--selection-warning`              | Auswahl: Achtung                 | `#d88c17` (Orange)                                   |
+| `--selection-success`              | Auswahl: bereit                  | `#139a43` (Gruen)                                    |
 
-### 7. Hintergrundbilder (css/style.css)
+### 7. Fotos im Modal "Ueber dieses Quiz" (css/style.css)
 
 | Was                                | Datei & Zeile                                        | Pfad                                                 |
 |------------------------------------|------------------------------------------------------|------------------------------------------------------|
-| Hintergrundbild 1                  | [`css/style.css:934`](./css/style.css#L934)          | `static/img1.jpg`                                    |
-| Hintergrundbild 2                  | [`css/style.css:941`](./css/style.css#L941)          | `static/img2.png`                                    |
+| Foto Idee                          | [`css/style.css:933`](./css/style.css#L933)          | `static/img1.jpg`                                    |
+| Foto Umsetzung                     | [`css/style.css:940`](./css/style.css#L940)          | `static/img2.png`                                    |
 
-### 8. Icon-Bibliothek (css/icons.css)
+### 8. Icons und Schrift (lokal eingebunden)
 
-| Was                                | Datei & Zeile                                        | URL                                                  |
-|------------------------------------|------------------------------------------------------|------------------------------------------------------|
-| Font Awesome Import                | [`css/icons.css:1`](./css/icons.css#L1)              | `https://site-assets.fontawesome.com/releases/v6.1.0/css/all.css` |
+Font Awesome Free 6.7.2 liegt unter `static/fontawesome/` (nur `solid` und `brands`), Inter 4.1 unter `static/font/`. Beides wird lokal ausgeliefert, damit keine Anfragen an Drittanbieter gehen.
 
-Die Icons der einzelnen Karten (z.B. `fa-solid fa-mountain`) werden im `icon`-Feld der jeweiligen Karte in der JSON-Datei definiert. Verfuegbare Icons: [fontawesome.com/icons](https://fontawesome.com/icons)
+Die Icons der einzelnen Karten (z.B. `fa-solid fa-mountain`) werden im `icon`-Feld der jeweiligen Karte in der JSON-Datei definiert. Verfuegbare Icons: [fontawesome.com/icons](https://fontawesome.com/icons?o=r&ic=free&s=solid) (nur Free + Solid funktioniert)
 
 ---
 
@@ -151,7 +147,7 @@ Die Icons der einzelnen Karten (z.B. `fa-solid fa-mountain`) werden im `icon`-Fe
 
 1. Neue JSON-Datei in `static/` erstellen (z.B. `cards-ziele.json`)
 2. Struktur von [`cards-werte.json`](./static/cards-werte.json) als Vorlage nehmen
-3. In [`js/script.js:7-10`](./js/script.js#L7-L10) einen neuen Eintrag zu `TEST_DEFINITIONS` hinzufuegen:
+3. In [`js/script.js:5-8`](./js/script.js#L5-L8) einen neuen Eintrag zu `TEST_DEFINITIONS` hinzufuegen:
    ```js
    { id: 'goals', path: './static/cards-ziele.json' }
    ```
