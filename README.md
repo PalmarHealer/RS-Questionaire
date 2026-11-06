@@ -99,7 +99,7 @@ Der Call-to-Action-Button auf der Ergebnisseite ist in JavaScript hartcodiert:
 
 | Was                                | Datei & Zeile                                        | Aktueller Wert                                       |
 |------------------------------------|------------------------------------------------------|------------------------------------------------------|
-| CTA-Link (URL)                     | [`js/script.js:607`](./js/script.js#L607)           | `https://www.robertschmikale.de/booking-calendar/...`|
+| CTA-Link (URL)                     | [`js/script.js:607`](./js/script.js#L607)           | `https://www.robertschmikale.de/`                   |
 | CTA-Link-Text                      | [`js/script.js:607`](./js/script.js#L607)           | `"Mehr ueber meine Begleitung erfahren"`              |
 
 ### 5. Fallback-Texte in JavaScript (js/script.js)

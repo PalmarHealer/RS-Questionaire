@@ -604,7 +604,7 @@ $(function () {
             return '<div class="' + groupClass + '">' + groupCards + '</div>';
         }).join('');
 
-        const ctaButton = '<div class="result-cta"><a href="https://www.robertschmikale.de/booking-calendar/kostenfreies-kennenlern-gespr%C3%A4ch" class="btn-primary cta-link">Mehr über meine Begleitung erfahren</a></div>';
+        const ctaButton = '<div class="result-cta"><a href="https://www.robertschmikale.de/" class="btn-primary cta-link">Mehr über meine Begleitung erfahren</a></div>';
 
         const betweenTextHTML = resultBetweenText ? '<div class="result-between-text">' + resultBetweenText + '</div>' : '';
 
